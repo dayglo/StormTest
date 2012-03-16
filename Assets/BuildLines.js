@@ -5,6 +5,7 @@ var c2 : Color = Color.red;
 //var lengthOfLineRenderer : int = 20;
 
 // Comment 2
+// Comment 4
 
 
 function Start() {

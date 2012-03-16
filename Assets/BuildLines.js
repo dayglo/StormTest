@@ -4,7 +4,7 @@ var c1 : Color = Color.yellow;
 var c2 : Color = Color.red;
 //var lengthOfLineRenderer : int = 20;
 
-
+// Comment 2
 
 
 function Start() {

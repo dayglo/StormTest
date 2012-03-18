@@ -6,7 +6,11 @@
         <State expanded="True">
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="BuildLines.js" selected="True" />
+              <Node name="player" expanded="True">
+                <Node name="scripts" expanded="True">
+                  <Node name="testTree.js" selected="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>

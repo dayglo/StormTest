@@ -76,7 +76,7 @@ function Update() {
 
 function UpdateLineRenderer(currentNode:Transform , line : LineRenderer,nodeNumber : int)  {
 
-	Debug.Log(line.gameObject.name);
+	//Debug.Log(line.gameObject.name);
 	line.SetPosition(nodeNumber,currentNode.position);
 	
 	switch (currentNode.childCount) 

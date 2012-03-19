@@ -82,7 +82,16 @@ function MakeLineRenderer(currentNode:Transform , line : LineRenderer,nodeNumber
 					} else {
 						//a hint wasnt found, so make a new line
 						Debug.Log("Building new line from " + currentNode.name);
-						MakeLineRenderer(child,child.gameObject.AddComponent(LineRenderer) as LineRenderer,0);
+						var newLine = child.gameObject.AddComponent(LineRenderer) as LineRenderer;
+						
+						newLine.SetVertexCount(1);
+						newLine.SetPosition(0,currentNode.position);
+						
+						newLine.material = new Material (Shader.Find("Mobile/VertexLit"));
+						newLine.SetColors(c1, c2);
+						newLine.SetWidth(0.05,0.05);
+						
+						MakeLineRenderer(child,newLine,1);
 	    			}
 				}
 			}

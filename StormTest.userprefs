@@ -1,6 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/player/scripts/BuildLines.js">
+    <Files>
+      <File FileName="Assets/Scripts/CarlMovement.js" Line="38" Column="50" />
+      <File FileName="Assets/player/scripts/BuildLines.js" Line="8" Column="24" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -8,9 +12,10 @@
             <Node name="Assets" expanded="True">
               <Node name="player" expanded="True">
                 <Node name="scripts" expanded="True">
-                  <Node name="testTree.js" selected="True" />
+                  <Node name="BuildLines.js" selected="True" />
                 </Node>
               </Node>
+              <Node name="Scripts" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -25,6 +30,9 @@
           <Value>currentNode.position</Value>
           <Value>line</Value>
           <Value>currentNode.childCount</Value>
+          <Value>lineContinuationHintKeys[i]</Value>
+          <Value>lineContinuationHintValues[i]</Value>
+          <Value>lineContinuationHintKeys</Value>
         </State>
       </Pad>
     </Pads>

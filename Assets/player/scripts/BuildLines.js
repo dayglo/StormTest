@@ -24,19 +24,19 @@ function MakeLineRenderer(currentNode:Transform , line : LineRenderer,nodeNumber
 	line.SetVertexCount(nodeNumber+1);
 	line.SetPosition(nodeNumber,currentNode.position);
 	
-	Debug.Log("The current node ("+ currentNode.name +") has " + currentNode.childCount + " children");
+	//Debug.Log("The current node ("+ currentNode.name +") has " + currentNode.childCount + " children");
 	switch (currentNode.childCount) 
 	{
 		case 0:
 			//the end of the node, finish the linerenderer
-			Debug.Log("ending line at " + currentNode.name);
+			//Debug.Log("ending line at " + currentNode.name);
 		break;
 		
 		case 1:
 			//continue the current line
 			nodeNumber++;
 			for (var child : Transform in currentNode) {
-				Debug.Log("continuing line through " + currentNode.name);
+				//Debug.Log("continuing line through " + currentNode.name);
     			MakeLineRenderer(child,line,nodeNumber);
 
 			}
@@ -49,12 +49,12 @@ function MakeLineRenderer(currentNode:Transform , line : LineRenderer,nodeNumber
 				
 					//delete all the head subnodes, they arent needed.
 					if (currentNode.name == 'Head'){
-						Debug.Log("Destroying "+ child.gameObject.name);
+						//Debug.Log("Destroying "+ child.gameObject.name);
 						Destroy(child.gameObject);
 						
 					} else {
 						//make a new line
-						Debug.Log("Building new line from " + currentNode.name);
+						//Debug.Log("Building new line from " + currentNode.name);
 						var newLine = child.gameObject.AddComponent(LineRenderer) as LineRenderer;
 						
 						newLine.SetVertexCount(1);

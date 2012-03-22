@@ -14,7 +14,7 @@ function Start(){
 //set the wrapmode of the different animations
 Carl.animation["Run"].wrapMode =WrapMode.Loop;
 Carl.animation["Walk"].wrapMode =WrapMode.Loop;
-Carl.animation["Walk"].speed = 1.4;
+Carl.animation["Walk"].speed = 1.7;
 
 Carl.animation.Play("Walk");
 

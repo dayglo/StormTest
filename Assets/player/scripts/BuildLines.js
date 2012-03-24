@@ -60,7 +60,7 @@ function MakeLineRenderer(currentNode:Transform , line : LineRenderer,nodeNumber
 						newLine.SetVertexCount(1);
 						newLine.SetPosition(0,currentNode.position);
 						
-						newLine.material = new Material (Shader.Find("Mobile/VertexLit"));
+						newLine.material = new Material (Shader.Find("VertexLit"));
 						newLine.SetColors(c1, c2);
 						newLine.SetWidth(0.03,0.03);
 						

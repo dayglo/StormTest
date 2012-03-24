@@ -1,7 +1,10 @@
 #pragma strict
 private var Carl : GameObject;
+var walkSpeed : float = 2.0;
 
-
+function Update(){
+	Carl.animation["Walk"].speed = walkSpeed;
+}
 
 function Awake() {
 Carl = GameObject.FindGameObjectWithTag("Player");
@@ -14,7 +17,7 @@ function Start(){
 //set the wrapmode of the different animations
 Carl.animation["Run"].wrapMode =WrapMode.Loop;
 Carl.animation["Walk"].wrapMode =WrapMode.Loop;
-Carl.animation["Walk"].speed = 1.7;
+
 
 Carl.animation.Play("Walk");
 
@@ -26,7 +29,11 @@ function Jump() {
 	
 
 	Carl.animation.CrossFade("Jump");
+	
+	
+	
 	Carl.animation.CrossFadeQueued("Walk",0.3,QueueMode.CompleteOthers);
+	
 	
 	
 }

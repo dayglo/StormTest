@@ -1,9 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/player/scripts/BuildLines.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CarlMovement.js">
     <Files>
-      <File FileName="Assets/Scripts/CarlMovement.js" Line="38" Column="50" />
-      <File FileName="Assets/player/scripts/BuildLines.js" Line="8" Column="24" />
+      <File FileName="Assets/RotateStuff.js" Line="10" Column="13" />
+      <File FileName="Assets/Scripts/CarlMovement.js" Line="6" Column="38" />
+      <File FileName="Assets/player/scripts/BuildLines.js" Line="63" Column="53" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -11,11 +12,11 @@
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="player" expanded="True">
-                <Node name="scripts" expanded="True">
-                  <Node name="BuildLines.js" selected="True" />
-                </Node>
+                <Node name="scripts" expanded="True" />
               </Node>
-              <Node name="Scripts" expanded="True" />
+              <Node name="Scripts" expanded="True">
+                <Node name="CarlMovement.js" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>

@@ -103,26 +103,6 @@ function HierarchytoDictionary (currentNode : Transform, transformList : List.<T
 				//make a color
 				c = Color(Random.value, Random.value, Random.value);
 
-					//delete all the head subnodes, they arent needed.
-					if (currentNode.name == 'Head'){
-						//Debug.Log("Destroying "+ child.gameObject.name);
-						Destroy(child.gameObject);
-						
-					} else {
-						//make a new line
-						//Debug.Log("Building new line from " + currentNode.name);
-						var newLine = child.gameObject.AddComponent(LineRenderer) as LineRenderer;
-						
-						newLine.SetVertexCount(1);
-						newLine.SetPosition(0,currentNode.position);
-						
-						newLine.material = new Material (Shader.Find("Mobile/VertexLit"));
-						newLine.SetColors(c1, c2);
-						newLine.SetWidth(0.03,0.03);
-						
-								if (currentNode.name.Contains("Hand")){
-									newLine.SetWidth(0.02,0.02);
-
 				//build a proper name for the vector line object
 				lineName = transformList[0].name + " to " + currentNode.name;
 				

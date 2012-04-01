@@ -102,8 +102,7 @@ function HierarchytoDictionary (currentNode : Transform, transformList : List.<T
 
 				//make a color
 				c = Color(Random.value, Random.value, Random.value);
-				
-<<<<<<< HEAD
+
 					//delete all the head subnodes, they arent needed.
 					if (currentNode.name == 'Head'){
 						//Debug.Log("Destroying "+ child.gameObject.name);
@@ -123,14 +122,14 @@ function HierarchytoDictionary (currentNode : Transform, transformList : List.<T
 						
 								if (currentNode.name.Contains("Hand")){
 									newLine.SetWidth(0.02,0.02);
-=======
+
 				//build a proper name for the vector line object
 				lineName = transformList[0].name + " to " + currentNode.name;
 				
 				//create the line
 				line = new VectorLine(lineName, TransformsToVectors(transformList), lineMaterial,2.0, LineType.Continuous);
 				Vector.DrawLine3D(line);
->>>>>>> Complete line drawing re-write using Vectrosity.
+
 	
 				//cache reference to this line so that it's point positions can be updated in the update loop
 				myVectorLines[line] = transformList;

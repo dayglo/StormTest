@@ -21,7 +21,7 @@ function Start() {
 	
 	var myTransformList = new List.<Transform>();		
 	myTransformList.Add(root);
-    HierarchytoDictionary(root,myTransformList);
+    HierarchytoLines(root,myTransformList);
     
 }
 
@@ -32,6 +32,12 @@ function Update(){
 	for (v in myVectorLines.Keys) {
 		//get the transform list from the dictionary for the current vectorline, convert it to an array of vector3, and update the vector line.
 		v.points3 = TransformsToVectors(myVectorLines[v]);
+		
+		//if (myVectorLines[v][0].name == "Spine2") {
+		//	var i : int = 0;
+		//
+		//}
+		
 		Vector.DrawLine3D(v);
 	 
 	  
@@ -54,11 +60,13 @@ function TransformsToVectors(transformList : List.<Transform>) : Vector3[] {
 }
 
 
-function HierarchytoDictionary (currentNode : Transform, transformList : List.<Transform>)  {
+function HierarchytoLines (currentNode : Transform, transformList : List.<Transform>)  {
 
 	switch (currentNode.childCount) 
 	{
-		case 0:		
+		case 0:	
+		
+			//reached the end of the line, so create the line object.	
 			Debug.Log("Adding final point "+ currentNode.name +"("+ currentNodeNumber + ") to line" +currentLineNumber);
 			
 			//add the final position to the line
@@ -71,7 +79,12 @@ function HierarchytoDictionary (currentNode : Transform, transformList : List.<T
 			lineName = transformList[0].name + " to " + currentNode.name;
 			
 			//create the line
-			line = new VectorLine(lineName, TransformsToVectors(transformList), lineMaterial,2.0, LineType.Continuous);
+			line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,2.0, LineType.Continuous,Joins.Fill);
+			
+			if  (transformList[0].name.Contains("Hand")) {
+				line.lineWidth = 1;
+			}
+			
 			Vector.DrawLine3D(line);
 
 			//cache reference to this line so that it's point positions can be updated in the update loop
@@ -86,13 +99,13 @@ function HierarchytoDictionary (currentNode : Transform, transformList : List.<T
     			
     			//continue the line
     			transformList.Add(currentNode);
-    			HierarchytoDictionary(child,transformList);
+    			HierarchytoLines(child,transformList);
 
 			}
 		break;
 		default:
 		
-			
+			//reached a junction, so draw the current line, before starting to make more.
 			//add the final position to the line
 			transformList.Add(currentNode);
 			
@@ -107,7 +120,12 @@ function HierarchytoDictionary (currentNode : Transform, transformList : List.<T
 				lineName = transformList[0].name + " to " + currentNode.name;
 				
 				//create the line
-				line = new VectorLine(lineName, TransformsToVectors(transformList), lineMaterial,2.0, LineType.Continuous);
+				line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,2.0, LineType.Continuous,Joins.Weld);
+				
+				if  (transformList[0].name.Contains("Hand")) {
+					line.lineWidth = 0.5;
+				}
+				
 				Vector.DrawLine3D(line);
 
 	
@@ -117,18 +135,24 @@ function HierarchytoDictionary (currentNode : Transform, transformList : List.<T
 		
 			//recurse each child node.
 			for (var child : Transform in currentNode) {
-				currentLineNumber++;
-				currentNodeNumber = 0;
-				Debug.Log("Creating line " + currentLineNumber + " starting from " + currentNode.name + " going through " + child.name);
 				
-				//make a new list of transforms...
-				var myTransformList = new List.<Transform>();
+				if (child.name != "Neck1") {
 				
-				//.. add the current node (which is the starting point) to the list.
-				myTransformList.Add(currentNode);
-				
-				//send the list off down towards the end of this line...
-    			HierarchytoDictionary(child,myTransformList);
+					currentLineNumber++;
+					currentNodeNumber = 0;
+					Debug.Log("Creating line " + currentLineNumber + " starting from " + currentNode.name + " going through " + child.name);
+					
+					//make a new list of transforms...
+					var myTransformList = new List.<Transform>();
+					
+					//.. add the current node (which is the starting point) to the list.
+					myTransformList.Add(currentNode);
+					
+					//send the list off down towards the end of this line...
+	    			HierarchytoLines(child,myTransformList);
+	    		}
+	    			
+    			
 			}
 		break;	
 	}

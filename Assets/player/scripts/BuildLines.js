@@ -33,10 +33,10 @@ function Update(){
 		//get the transform list from the dictionary for the current vectorline, convert it to an array of vector3, and update the vector line.
 		v.points3 = TransformsToVectors(myVectorLines[v]);
 		
-		//if (myVectorLines[v][0].name == "Spine2") {
-		//	var i : int = 0;
-		//
-		//}
+		if (myVectorLines[v][0].name == "Spine2") {
+			var i : int = 0;
+		
+		}
 		
 		Vector.DrawLine3D(v);
 	 
@@ -73,13 +73,13 @@ function HierarchytoLines (currentNode : Transform, transformList : List.<Transf
 			transformList.Add(currentNode);
 			
 			//make a color
-			c = Color(Random.value, Random.value, Random.value);
+			//c = Color(Random.value, Random.value, Random.value);
 			
 			//build a proper name for the vector line object
 			lineName = transformList[0].name + " to " + currentNode.name;
 			
 			//create the line
-			line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,2.0, LineType.Continuous,Joins.Fill);
+			line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,2.0, LineType.Continuous);
 			
 			if  (transformList[0].name.Contains("Hand")) {
 				line.lineWidth = 1;
@@ -114,13 +114,13 @@ function HierarchytoLines (currentNode : Transform, transformList : List.<Transf
 			} else {
 
 				//make a color
-				c = Color(Random.value, Random.value, Random.value);
+				//c = Color(Random.value, Random.value, Random.value);
 
 				//build a proper name for the vector line object
 				lineName = transformList[0].name + " to " + currentNode.name;
 				
 				//create the line
-				line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,2.0, LineType.Continuous,Joins.Weld);
+				line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,2.0, LineType.Continuous);
 				
 				if  (transformList[0].name.Contains("Hand")) {
 					line.lineWidth = 0.5;

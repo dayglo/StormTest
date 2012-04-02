@@ -1,6 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Code Metrics">
+    <Files>
+      <File FileName="Code Metrics" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -19,9 +22,8 @@
               <Node name="player" expanded="True">
                 <Node name="scripts" expanded="True" />
               </Node>
-              <Node name="Scripts" expanded="True">
-                <Node name="GradientBackground.js" selected="True" />
-              </Node>
+              <Node name="Scripts" expanded="True" />
+              <Node name="lines_test.js" selected="True" />
             </Node>
           </Node>
         </State>
@@ -35,6 +37,8 @@
           <Value>myTransformList</Value>
           <Value>transformList[0]</Value>
           <Value>currentNode</Value>
+          <Value>myVectorLines[v]</Value>
+          <Value>v.points3</Value>
         </State>
       </Pad>
     </Pads>

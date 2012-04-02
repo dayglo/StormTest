@@ -1,9 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Code Metrics">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/player/CircularGravity.js">
     <Files>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <File FileName="Code Metrics" />
+=======
+      <File FileName="Assets/player/CircularGravity.js" Line="21" Column="29" />
+      <File FileName="Assets/player/scripts/BuildLines.js" Line="1" Column="1" />
+      <File FileName="Assets/lines_test.js" Line="1" Column="1" />
+      <File FileName="Assets/RotateStuff.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CarlMovement.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GradientBackground.js" Line="1" Column="1" />
+>>>>>>> added circular gravity in scene 04
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -22,9 +31,9 @@
             <Node name="Assets" expanded="True">
               <Node name="player" expanded="True">
                 <Node name="scripts" expanded="True" />
+                <Node name="CircularGravity.js" selected="True" />
               </Node>
               <Node name="Scripts" expanded="True" />
-              <Node name="lines_test.js" selected="True" />
             </Node>
           </Node>
         </State>

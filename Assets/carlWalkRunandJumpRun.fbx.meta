@@ -10,6 +10,11 @@ ModelImporter:
     7400008: runold //// carlWalkRunandJumpRun
     7400010: bigjump //// carlWalkRunandJumpRun
     7400012: swat //// carlWalkRunandJumpRun
+    7400014: runandjumpold //// carlWalkRunandJumpRun
+    7400016: runold2 //// carlWalkRunandJumpRun
+    7400018: bigjumpold //// carlWalkRunandJumpRun
+    7400020: runandjump2 //// carlWalkRunandJumpRun
+    7400022: jump //// carlWalkRunandJumpRun
   serializedVersion: 10
   materials:
     importMaterials: 1

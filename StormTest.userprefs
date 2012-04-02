@@ -2,6 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Code Metrics">
     <Files>
+<<<<<<< HEAD
       <File FileName="Code Metrics" />
     </Files>
     <Pads>
@@ -42,9 +43,16 @@
         </State>
       </Pad>
     </Pads>
+=======
+      <File FileName="Assets/Scripts/CarlMovement.js" Line="60" Column="19" />
+      <File FileName="Assets/RotateStuff.js" Line="1" Column="1" />
+    </Files>
+>>>>>>> New Carl with jump
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/simonparkinson/Development/AssCloud9/StormTest/Assets/Scripts/CarlMovement.js" line="120" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

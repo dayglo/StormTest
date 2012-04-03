@@ -13,11 +13,16 @@ function Start () {
 
 }
 
-function Update () {
+function FixedUpdate () {
 
-	gravityVector = blackHole.position - transform.position;
+	gravityVector = blackHole.position - myTransform.position;
+	Debug.DrawRay(myTransform.position,gravityVector.right * 20,Color.red);
+	Debug.DrawRay(myTransform.position,gravityVector.up * 20,Color.green);
+	Debug.DrawRay(myTransform.position,gravityVector.forward * 20,Color.blue);
+	
 	force.force = gravityVector.normalized * gravityStrength;
 	myTransform.up = -gravityVector;
-	myTransform.Rotate(0,90,0);
+	//myTransform.rotation.eulerAngles.y = 90;
+	myTransform.Rotate(myTransform.up,90, Space.Self);
 
 }

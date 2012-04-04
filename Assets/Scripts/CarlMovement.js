@@ -2,6 +2,7 @@
 private var Carl : GameObject;
 var jumpForce : int = 4.0f;
 private var grounded : boolean;
+private var sliding : boolean;
 private var jumpCount : int;
 
 
@@ -20,6 +21,9 @@ Carl.animation["walk"].wrapMode =WrapMode.Loop;
 //Carl.animation["run"].speed = 1.7;
 Carl.animation["run"].speed = 1.4;
 
+Carl.animation["slidedownevent"].speed = 1.4;
+Carl.animation["slideupevent"].speed = 1.4;
+
 Carl.animation.Play("run");
 
 
@@ -32,10 +36,13 @@ function Update() {
             grounded = true;
             //reset our jump count since we hit the ground
             jumpCount = 0;
+            if (!sliding) {
             	Carl.animation.CrossFade("run");
+            }
+            	//Carl.animation.CrossFade("run");
             }else {
             grounded=false;
-            Carl.animation.CrossFade("jump");
+           // Carl.animation.CrossFade("jump");
            // Debug.Log("Not grounded");
             }
 
@@ -96,6 +103,37 @@ function Punch() {
 }
 */
 
+function ResumeRunning() {
+//Carl.animation.CrossFadeQueued("run",0.1,QueueMode.CompleteOthers);
+sliding=false;
+
+}
+
+function SlideUp() {
+	
+	Carl.animation.CrossFade("slideupevent");
+	
+	//Carl.animation.CrossFadeQueued("run",0.1,QueueMode.CompleteOthers);
+	
+	//sliding=false;
+	//Carl.animation.CrossFade("swat");
+	//Carl.animation.CrossFadeQueued("slideup",1.0,QueueMode.CompleteOthers);
+	//Carl.animation["walk"].speed = 1.7;
+	//Carl.animation.Play("walk");
+
+	
+}
+function SlideDown() {
+	
+	Carl.animation.CrossFade("slidedown");
+	sliding=true;
+	//Carl.animation.CrossFade("swat");
+	//Carl.animation.CrossFadeQueued("slideup",1.0,QueueMode.CompleteOthers);
+	//Carl.animation["walk"].speed = 1.7;
+	//Carl.animation.Play("walk");
+
+	
+}
 
 function Swat() {
 	
@@ -110,24 +148,29 @@ function Swat() {
 function OnEnable()
 {
     // subscribe to the global tap event
+  // FingerGestures.OnFingerDown += MyFingerGestures_OnFingerDown;
+   //     FingerGestures.OnFingerUp += FingerGestures_OnFingerUp; 
+   //     FingerGestures.OnFingerStationaryBegin += FingerGestures_OnFingerStationaryBegin;
+   //     FingerGestures.OnFingerStationary += FingerGestures_OnFingerStationary;
+   //     FingerGestures.OnFingerStationaryEnd += FingerGestures_OnFingerStationaryEnd;
+        
+        
     FingerGestures.OnTap += MyFingerGestures_OnTap;
-      FingerGestures.OnDoubleTap += MyFingerGestures_OnDoubleTap;
+     FingerGestures.OnDoubleTap += MyFingerGestures_OnDoubleTap;
       FingerGestures.OnSwipe += MyFingerGestures_OnSwipe;
-     // FingerGestures.OnFingerStationaryBegin += FingerGestures_OnFingerStationaryBegin;
-      // FingerGestures.OnLongPress += MyFingerGestures_OnLongPress;
-     // FingerGestures.OnFingerStationaryBegin += MyFingerGestures_OnFingerStationaryBegin;
-      //FingerGestures.OnFingerStationaryBegin += MyFingerGestures_OnFingerStationaryBegin;
-     // FingerGestures.OnFingerStationary += MyFingerGestures_OnFingerStationary;
-     // FingerGestures.OnFingerStationaryEnd += MyFingerGestures_OnFingerStationaryEnd;
+     FingerGestures.OnFingerSwipe += MyFingerGestures_OnFingerSwipe;
+     // FingerGestures.OnSwipeDirection += MyFingerGestures_OnSwipe;
+
     
 }
  
 function OnDisable()
 {
     // unsubscribe from the global tap event
-    FingerGestures.OnTap -= MyFingerGestures_OnTap;
+   FingerGestures.OnTap -= MyFingerGestures_OnTap;
  FingerGestures.OnDoubleTap -= MyFingerGestures_OnDoubleTap;
         FingerGestures.OnSwipe -= MyFingerGestures_OnSwipe;
+         FingerGestures.OnFingerSwipe -= MyFingerGestures_OnFingerSwipe;
         
        // FingerGestures.OnFingerStationary -= MyFingerGestures_OnFingerStationary;
     //  FingerGestures.OnFingerStationaryEnd -= MyFingerGestures_OnFingerStationaryEnd;
@@ -142,7 +185,7 @@ function MyFingerGestures_OnTap( fingerPos : Vector2 )
 {
    // Debug.Log( "TAP detected at " + fingerPos );
    if (grounded) {
-   Jump();
+  // Jump();
     }
 }
 
@@ -152,6 +195,7 @@ function MyFingerGestures_OnDoubleTap( fingerPos : Vector2 )
   // Debug.Log( " Double TAP  at " + fingerPos );
   // Punch();
   //BigJump();
+  
     
 }
 
@@ -159,6 +203,29 @@ function MyFingerGestures_OnSwipe( fingerPos : Vector2 )
 {
   // Debug.Log( " Double TAP  at " + fingerPos );
   // Punch();
-  Swat();
+ // SlideDown();
     
+}
+
+function MyFingerGestures_OnFingerSwipe(fingerIndex : int,startPos : Vector2,  direction : FingerGestures.SwipeDirection,  velocity : float)
+{
+
+Debug.Log("direction " + direction.ToString());
+if (grounded) {
+ if (direction.ToString() == "Down") {
+ 	
+ 	SlideDown();
+ 	}
+ 	else if (direction.ToString() == "Up") {
+ 		if (sliding) {
+ 			SlideUp();
+ 			}
+ 			else
+ 			{
+ 			
+ 			Jump();
+ 			}
+ 	}
+ }
+
 }

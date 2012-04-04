@@ -15,6 +15,8 @@ ModelImporter:
     7400018: bigjumpold //// carlWalkRunandJumpRun
     7400020: runandjump2 //// carlWalkRunandJumpRun
     7400022: jump //// carlWalkRunandJumpRun
+    7400024: slidedown //// carlWalkRunandJumpRun
+    7400026: slideup //// carlWalkRunandJumpRun
   serializedVersion: 10
   materials:
     importMaterials: 1

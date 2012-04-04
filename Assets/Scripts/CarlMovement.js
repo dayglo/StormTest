@@ -1,6 +1,6 @@
 #pragma strict
 private var Carl : GameObject;
-private var jumpForce : int = 4.0f;
+var jumpForce : int = 4.0f;
 private var grounded : boolean;
 private var jumpCount : int;
 

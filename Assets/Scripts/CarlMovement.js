@@ -110,7 +110,7 @@ sliding=false;
 }
 
 function SlideUp() {
-	
+	yield WaitForSeconds (1);
 	Carl.animation.CrossFade("slideupevent");
 	
 	//Carl.animation.CrossFadeQueued("run",0.1,QueueMode.CompleteOthers);
@@ -125,7 +125,7 @@ function SlideUp() {
 }
 function SlideDown() {
 	
-	Carl.animation.CrossFade("slidedown");
+	Carl.animation.CrossFade("slidedownevent");
 	sliding=true;
 	//Carl.animation.CrossFade("swat");
 	//Carl.animation.CrossFadeQueued("slideup",1.0,QueueMode.CompleteOthers);

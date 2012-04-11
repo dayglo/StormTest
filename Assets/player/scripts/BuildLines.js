@@ -15,7 +15,7 @@ var c : Color;
 
 var currentLineNumber : int = 0;
 var currentNodeNumber : int = 0;
-var lineWidth : float = 4.0;
+
 
 function Start() {
 	
@@ -79,7 +79,7 @@ function HierarchytoLines (currentNode : Transform, transformList : List.<Transf
 			lineName = transformList[0].name + " to " + currentNode.name;
 			
 			//create the line
-			line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,lineWidth, LineType.Continuous);
+			line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,2.0, LineType.Continuous);
 			
 			if  (transformList[0].name.Contains("Hand")) {
 				line.lineWidth = 1;
@@ -120,7 +120,7 @@ function HierarchytoLines (currentNode : Transform, transformList : List.<Transf
 				lineName = transformList[0].name + " to " + currentNode.name;
 				
 				//create the line
-				line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,lineWidth, LineType.Continuous);
+				line = new VectorLine(lineName, TransformsToVectors(transformList),c, lineMaterial,2.0, LineType.Continuous);
 				
 				if  (transformList[0].name.Contains("Hand")) {
 					line.lineWidth = 0.5;

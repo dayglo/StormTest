@@ -11,9 +11,9 @@ FBXHeaderExtension:  {
         Year: 2012
         Month: 4
         Day: 11
-        Hour: 14
-        Minute: 44
-        Second: 32
+        Hour: 15
+        Minute: 36
+        Second: 18
         Millisecond: 0
     }
     Creator: "FBX SDK/FBX Plugins version 2010.0"
@@ -21,7 +21,7 @@ FBXHeaderExtension:  {
         FlagPLE: 0
     }
 }
-CreationTime: "2012-04-11 14:44:32:000"
+CreationTime: "2012-04-11 15:36:18:000"
 Creator: "FBX SDK/FBX Plugins build 20090408"
 
 ; Document Description
@@ -155,7 +155,7 @@ Objects:  {
             Name: ""
             MappingInformationType: "ByPolygonVertex"
             ReferenceInformationType: "Direct"
-            Normals: -0,0,1,-0,0,1,-0,0,1,-0,0,1,0,0,-1,0,0,-1,-0,-0,-1,-0,-0,-1
+            Normals: -0,0,1,-0,0,1,-0,0,1,-0,0,1,-0,-0,-1,-0,-0,-1,-0,-0,-1,-0,-0,-1
         }
         LayerElementPolygonGroup: 0 {
             Version: 101
@@ -169,9 +169,9 @@ Objects:  {
             Name: "Texture"
             MappingInformationType: "ByPolygonVertex"
             ReferenceInformationType: "IndexToDirect"
-            UV: 0.000550031661987305,0.999621987342834,1.00055003166199,0.999621987342834,1.00055003166199,-0.000621974468231201
-             ,0.000550031661987305,-0.000621974468231201,0.000550031661987305,-0.000621974468231201,1.00055003166199,-0.000621974468231201
-             ,1.00055003166199,0.999621987342834,0.000550031661987305,0.999621987342834
+            UV: 0.0417335294187069,0.960979342460632,0.963233470916748,0.960979342460632,0.963233470916748,0.0440056808292866
+             ,0.0417335294187069,0.0440056808292866,0.0417335294187069,0.0440056808292866,0.963233470916748,0.0440056808292866
+             ,0.963233470916748,0.960979342460632,0.0417335294187069,0.960979342460632
             UVIndex: 0,1,2,3,4,5,6,7
         }
         LayerElementMaterial: 0 {
@@ -297,8 +297,8 @@ Objects:  {
             Property: "AspectHeight", "double", "N",200
             Property: "PixelAspectRatio", "double", "N",1
             Property: "FilmOffset", "Vector2D", "N",0,0
-            Property: "FilmWidth", "double", "N",1.41732283030866
-            Property: "FilmHeight", "double", "N",0.94488188687244
+            Property: "FilmWidth", "double", "N",1.41732282886299
+            Property: "FilmHeight", "double", "N",0.944881885908661
             Property: "FilmAspectRatio", "double", "N",1.5
             Property: "FilmSqueezeRatio", "double", "N",1
             Property: "FilmFormatIndex", "enum", "N",0

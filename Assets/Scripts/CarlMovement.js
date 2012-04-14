@@ -5,7 +5,7 @@ private var grounded : boolean;
 private var sliding : boolean;
 private var jumpCount : int;
 
-private var ouchText : Transform;
+private var ouchText : GameObject;
 
 
 function Awake() {
@@ -28,7 +28,7 @@ Carl.animation["slideupevent"].speed = 1.4;
 Carl.animation.Play("run");
 
 ouchText = GameObject.Find("CarlOuchText");
-ouctText.active = false;
+ouchText.active = false;
 }
 
 function Update() {

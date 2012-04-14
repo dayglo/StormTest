@@ -5,6 +5,7 @@ private var grounded : boolean;
 private var sliding : boolean;
 private var jumpCount : int;
 
+private var ouchText : Transform;
 
 
 function Awake() {
@@ -26,7 +27,8 @@ Carl.animation["slideupevent"].speed = 1.4;
 
 Carl.animation.Play("run");
 
-
+ouchText = GameObject.Find("CarlOuchText");
+ouctText.active = false;
 }
 
 function Update() {
@@ -228,4 +230,18 @@ if (grounded) {
  	}
  }
 
+}
+
+function OnTriggerEnter (theCollision : Collider) {
+	if (theCollision.gameObject.tag == "Environment") {
+		// Show or hide ouch text
+		ouchText.active=true;
+ 	}
+}
+
+function OnTriggerExit (theCollision : Collider) {
+	if (theCollision.gameObject.tag == "Environment") {
+		// Show or hide ouch text
+		ouchText.active=false;
+ 	}
 }

@@ -1,7 +1,7 @@
 #pragma strict
-private var Carl : GameObject;
+ var Carl : GameObject;
 var jumpForce : int = 4.0f;
-private var grounded : boolean;
+var grounded : boolean;
 private var sliding : boolean;
 private var jumpCount : int;
 
@@ -32,8 +32,8 @@ ouchText.active = false;
 }
 
 function Update() {
-// Debug.DrawRay (transform.position, -transform.up, Color.green);
- if (!Physics.Raycast(transform.position, -transform.up, 2)) {
+Debug.DrawRay (transform.position, -transform.up * 0.1, Color.green);
+ if (Physics.Raycast(transform.position, -transform.up, 0.1)) {
 // Debug.Log("grounded");
             grounded = true;
             //reset our jump count since we hit the ground

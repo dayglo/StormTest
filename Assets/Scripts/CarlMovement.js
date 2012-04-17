@@ -232,16 +232,18 @@ if (grounded) {
 
 }
 
-function OnTriggerEnter (theCollision : Collider) {
+/*
+function OnCollisionEnter (theCollision : Collision) {
+	Debug.Log("Carl Collision with" + theCollision.gameObject.tag);
 	if (theCollision.gameObject.tag == "Environment") {
 		// Show or hide ouch text
 		ouchText.active=true;
  	}
 }
 
-function OnTriggerExit (theCollision : Collider) {
+function OnCollisionExit (theCollision : Collision) {
 	if (theCollision.gameObject.tag == "Environment") {
 		// Show or hide ouch text
 		ouchText.active=false;
  	}
-}
+} */

@@ -1,7 +1,7 @@
 #pragma strict
-private var Carl : GameObject;
+ var Carl : GameObject;
 var jumpForce : int = 4.0f;
-private var grounded : boolean;
+var grounded : boolean;
 private var sliding : boolean;
 private var jumpCount : int;
 
@@ -32,8 +32,8 @@ ouchText.active = false;
 }
 
 function Update() {
-// Debug.DrawRay (transform.position, -transform.up, Color.green);
- if (!Physics.Raycast(transform.position, -transform.up, 2)) {
+Debug.DrawRay (transform.position, -transform.up * 0.1, Color.green);
+ if (Physics.Raycast(transform.position, -transform.up, 0.1)) {
 // Debug.Log("grounded");
             grounded = true;
             //reset our jump count since we hit the ground
@@ -232,18 +232,25 @@ if (grounded) {
 
 }
 
-/*
+
 function OnCollisionEnter (theCollision : Collision) {
-	Debug.Log("Carl Collision with" + theCollision.gameObject.tag);
-	if (theCollision.gameObject.tag == "Environment") {
-		// Show or hide ouch text
-		ouchText.active=true;
+	Debug.Log("Carl Collision with " + theCollision.gameObject.tag);
+	for (var contact : ContactPoint in theCollision.contacts) {
+        print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
+        if(contact.otherCollider.tag=="Environment") {
+			// Show or hide ouch text
+			ouchText.active=true;
+		}
  	}
 }
 
 function OnCollisionExit (theCollision : Collision) {
-	if (theCollision.gameObject.tag == "Environment") {
-		// Show or hide ouch text
-		ouchText.active=false;
+	Debug.Log("Carl Collision exit " + theCollision.gameObject.tag);
+	for (var contact : ContactPoint in theCollision.contacts) {
+        print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
+        if(contact.otherCollider.tag=="Environment") {
+			// Show or hide ouch text
+			ouchText.active=false;
+		}
  	}
-} */
+} 

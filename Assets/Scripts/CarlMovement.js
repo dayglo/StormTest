@@ -7,12 +7,87 @@ private var jumpCount : int;
 
 private var ouchText : GameObject;
 
+//collider, rigidbody, emitter collections
+private var colliderComponents : Component[];
+private var rigidbodyComponents : Component[];
+//private var playerModelCrashEmitterComponents : Component[]; TODO: GC -import crashemitter component for flying dust on crash.
+
+private var colliders : Collider[];
+private var rigidbodies : Rigidbody[];
+//private var playerModelCrashEmitters : CrashEmitter[];  TODO: GC -import crashemitter component for flying dust on crash.
+
+var myRigidbody : Rigidbody;
+var previousVelocity: Vector3;
+var rootOfPhysicsHierarchy : Transform;
+
+var worldRotator : WorldRotator;
 
 function Awake() {
-Carl = GameObject.FindGameObjectWithTag("Player");
+	Carl = GameObject.FindGameObjectWithTag("Player");
+	myRigidbody = rigidbody;
 
+	
+	rootOfPhysicsHierarchy = GameObject.FindGameObjectWithTag("PlayerPhysicsRoot").transform;
+	rigidbodyComponents = rootOfPhysicsHierarchy.GetComponentsInChildren (Rigidbody);
+    colliderComponents = rootOfPhysicsHierarchy.GetComponentsInChildren (Collider);
+    //playerModelCrashEmitterComponents = Carl.transform.GetComponentsInChildren (CrashEmitter); - TODO: GC -import crashemitter component for flying dust on crash.
+    
+    worldRotator = GameObject.FindGameObjectWithTag("WorldRotator").GetComponent("WorldRotator") as WorldRotator;
 
 }
+
+function KillPlayer () {
+	
+	
+     Debug.Log("ANIMATION: Disabling anim due to death");
+     Carl.animation.enabled = false;
+
+	
+	//disable the main collider
+	myRigidbody.isKinematic = true;
+    myRigidbody.detectCollisions = false;
+    gameObject.collider.isTrigger = true;
+
+	//enable the ragdoll
+	for (var comp1 : Component in rigidbodyComponents) {
+        var rigid = comp1 as Rigidbody;
+        rigid.isKinematic = false;
+        rigid.velocity = Vector3(1,1.4,0) * 2;
+    }
+        
+    for (var comp1 : Component in colliderComponents) {
+        var coll = comp1 as Collider;
+        coll.isTrigger = false;
+    }
+    
+    //for (var comp1 : Component in playerModelCrashEmitterComponents) { TODO: GC -import crashemitter component for flying dust on crash.
+    //    var crashEmitter = comp1 as CrashEmitter;
+    //    crashEmitter.switchedOn = true;
+    //}
+	
+	worldRotator.masterSpeed = 0;
+	
+	StartCoroutine(WaitForDeadPlayerToSettle());
+
+}
+
+
+function WaitForDeadPlayerToSettle(){
+
+ Debug.Log("Waiting for dead player to settle");
+
+// while (rootOfPhysicsHierarchy.rigidbody.velocity.magnitude > 0.1) { TODO: make the player not roll off the level.
+     yield WaitForSeconds (0.5);
+ // }
+  
+  Debug.Log("Dead player stopped moving, restarting level");
+  yield WaitForSeconds (1);
+  
+  
+  Application.LoadLevel(0);
+
+}
+
 
 function Start(){
 
@@ -31,7 +106,11 @@ ouchText = GameObject.Find("CarlOuchText");
 ouchText.active = false;
 }
 
+<<<<<<< HEAD
 function Update() {
+=======
+function FixedUpdate() {
+>>>>>>> fb0b8b2ed101e8469695da035c7c283e57b00de4
 Debug.DrawRay (transform.position, -transform.up * 0.1, Color.green);
  if (Physics.Raycast(transform.position, -transform.up, 0.1)) {
 // Debug.Log("grounded");
@@ -49,7 +128,7 @@ Debug.DrawRay (transform.position, -transform.up * 0.1, Color.green);
             }
 
 
-
+	previousVelocity = myRigidbody.velocity;
 }
 
 function Jump() {
@@ -232,6 +311,7 @@ if (grounded) {
 
 }
 
+<<<<<<< HEAD
 
 function OnCollisionEnter (theCollision : Collision) {
 	Debug.Log("Carl Collision with " + theCollision.gameObject.tag);
@@ -241,6 +321,13 @@ function OnCollisionEnter (theCollision : Collision) {
 			// Show or hide ouch text
 			ouchText.active=true;
 		}
+=======
+function OnTriggerEnter (theCollision : Collider) {
+	if (theCollision.gameObject.tag == "Environment") {
+		// Show or hide ouch text
+		ouchText.active=true;
+		KillPlayer();
+>>>>>>> fb0b8b2ed101e8469695da035c7c283e57b00de4
  	}
 }
 

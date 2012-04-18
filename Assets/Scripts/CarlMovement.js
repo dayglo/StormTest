@@ -106,28 +106,22 @@ ouchText = GameObject.Find("CarlOuchText");
 ouchText.active = false;
 }
 
-<<<<<<< HEAD
-function Update() {
-=======
 function FixedUpdate() {
->>>>>>> fb0b8b2ed101e8469695da035c7c283e57b00de4
-Debug.DrawRay (transform.position, -transform.up * 0.1, Color.green);
- if (Physics.Raycast(transform.position, -transform.up, 0.1)) {
-// Debug.Log("grounded");
-            grounded = true;
-            //reset our jump count since we hit the ground
-            jumpCount = 0;
-            if (!sliding) {
-            	Carl.animation.CrossFade("run");
-            }
-            	//Carl.animation.CrossFade("run");
-            }else {
-            grounded=false;
-           // Carl.animation.CrossFade("jump");
-           // Debug.Log("Not grounded");
-            }
-
-
+	Debug.DrawRay (transform.position, -transform.up * 0.1, Color.green);
+	 if (Physics.Raycast(transform.position, -transform.up, 0.1)) {
+		// Debug.Log("grounded");
+	    grounded = true;
+	    //reset our jump count since we hit the ground
+	    jumpCount = 0;
+	    if (!sliding) {
+	    	Carl.animation.CrossFade("run");
+	    }
+    	//Carl.animation.CrossFade("run");
+    } else {
+	    grounded=false;
+	   // Carl.animation.CrossFade("jump");
+	   // Debug.Log("Not grounded");
+    }
 	previousVelocity = myRigidbody.velocity;
 }
 
@@ -311,8 +305,6 @@ if (grounded) {
 
 }
 
-<<<<<<< HEAD
-
 function OnCollisionEnter (theCollision : Collision) {
 	Debug.Log("Carl Collision with " + theCollision.gameObject.tag);
 	for (var contact : ContactPoint in theCollision.contacts) {
@@ -320,15 +312,9 @@ function OnCollisionEnter (theCollision : Collision) {
         if(contact.otherCollider.tag=="Environment") {
 			// Show or hide ouch text
 			ouchText.active=true;
+			KillPlayer();
 		}
-=======
-function OnTriggerEnter (theCollision : Collider) {
-	if (theCollision.gameObject.tag == "Environment") {
-		// Show or hide ouch text
-		ouchText.active=true;
-		KillPlayer();
->>>>>>> fb0b8b2ed101e8469695da035c7c283e57b00de4
- 	}
+	}
 }
 
 function OnCollisionExit (theCollision : Collision) {

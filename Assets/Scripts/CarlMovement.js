@@ -76,9 +76,9 @@ function WaitForDeadPlayerToSettle(){
 
  Debug.Log("Waiting for dead player to settle");
 
-// while (rootOfPhysicsHierarchy.rigidbody.velocity.magnitude > 0.1) { TODO: make the player not roll off the level.
-     yield WaitForSeconds (0.5);
- // }
+ //while (rootOfPhysicsHierarchy.rigidbody.velocity.magnitude > 0.1) { 
+     yield WaitForSeconds (2.0);
+ //}
   
   Debug.Log("Dead player stopped moving, restarting level");
   yield WaitForSeconds (1);
@@ -306,24 +306,24 @@ if (grounded) {
 }
 
 function OnCollisionEnter (theCollision : Collision) {
-	Debug.Log("Carl Collision with " + theCollision.gameObject.tag);
 	for (var contact : ContactPoint in theCollision.contacts) {
         print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
-        if(contact.otherCollider.tag=="Environment") {
+        if(contact.thisCollider.tag=="Environment" || contact.otherCollider.tag=="Environment") {
 			// Show or hide ouch text
 			ouchText.active=true;
 			KillPlayer();
 		}
 	}
+	Debug.Log("OnCollisionEnter: End");
 }
 
 function OnCollisionExit (theCollision : Collision) {
-	Debug.Log("Carl Collision exit " + theCollision.gameObject.tag);
 	for (var contact : ContactPoint in theCollision.contacts) {
         print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
-        if(contact.otherCollider.tag=="Environment") {
+        if(contact.thisCollider.tag=="Environment" || contact.otherCollider.tag=="Environment") {
 			// Show or hide ouch text
 			ouchText.active=false;
 		}
  	}
+	Debug.Log("OnCollisionExit: End");
 } 

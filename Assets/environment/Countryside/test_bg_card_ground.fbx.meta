@@ -3,6 +3,7 @@ guid: 0fd1c37722ca3494982123c2675dfd8f
 ModelImporter:
   fileIDToRecycleName:
     4300000: Mesh
+    7400000: modo_Anim //// test_bg_card_ground
   serializedVersion: 10
   materials:
     importMaterials: 1

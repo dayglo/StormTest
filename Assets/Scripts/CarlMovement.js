@@ -107,8 +107,8 @@ ouchText.active = false;
 }
 
 function FixedUpdate() {
-	Debug.DrawRay (transform.position, -transform.up * 0.1, Color.green);
-	 if (Physics.Raycast(transform.position, -transform.up, 0.1)) {
+	Debug.DrawRay (transform.position, -transform.up * 0.05, Color.green);
+	 if (Physics.Raycast(transform.position, -transform.up, 0.05)) {
 		// Debug.Log("grounded");
 	    grounded = true;
 	    //reset our jump count since we hit the ground
@@ -122,7 +122,7 @@ function FixedUpdate() {
 	   // Carl.animation.CrossFade("jump");
 	   // Debug.Log("Not grounded");
     }
-	previousVelocity = myRigidbody.velocity;
+//	previousVelocity = myRigidbody.velocity;
 }
 
 function Jump() {
@@ -259,9 +259,11 @@ function OnDisable()
 function MyFingerGestures_OnTap( fingerPos : Vector2 )
 {
    // Debug.Log( "TAP detected at " + fingerPos );
-   if (grounded) {
-  // Jump();
-    }
+for (var scp : Collider in colliderComponents) {
+
+Debug.Log("scp " + scp.name );
+}
+
 }
 
 
@@ -305,9 +307,12 @@ if (grounded) {
 
 }
 
+/*
+
 function OnCollisionEnter (theCollision : Collision) {
+Debug.Log("scp");
 	for (var contact : ContactPoint in theCollision.contacts) {
-        print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
+        print(contact.thisCollider.name + " hit " + contact.otherCollider.name + " " + contact.thisCollider.tag + " " + contact.otherCollider.tag);
         if(contact.thisCollider.tag=="Environment" || contact.otherCollider.tag=="Environment") {
 			// Show or hide ouch text
 			ouchText.active=true;
@@ -327,3 +332,4 @@ function OnCollisionExit (theCollision : Collision) {
  	}
 	Debug.Log("OnCollisionExit: End");
 } 
+*/

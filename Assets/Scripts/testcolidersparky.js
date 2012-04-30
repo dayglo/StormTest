@@ -7,7 +7,7 @@ function OnTriggerEnter (other : Collider) {
 
 Debug.Log("***********Simon collider " + other.tag);
 
-if (other.tag != "Player")
+if (other.tag == "Environment")
 SendMessageUpwards ("KillPlayer");
 
 

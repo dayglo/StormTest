@@ -16,7 +16,7 @@ function Awake() {
    sqrMinimumExtent = minimumExtent*minimumExtent; 
 } 
 
-function FixedUpdate() { 
+function FixedUpdateDisabled() { 
    //have we moved more than our minimum extent? 
    var movementThisStep : Vector3 = myRigidbody.position - previousPosition; 
    var movementSqrMagnitude : float = movementThisStep.sqrMagnitude;

@@ -127,8 +127,10 @@ function FixedUpdate() {
 
 function Jump() {
 	
-Carl.animation.Play("jump");
+	Carl.animation["runold"].speed = 0.3;
+	Carl.animation.Play("jump");
 	Carl.animation.CrossFade("jump");
+	
 	
 	rigidbody.AddRelativeForce(transform.up * jumpForce,ForceMode.Impulse);
 	//Carl.animation.CrossFadeQueued("run",0.3,QueueMode.CompleteOthers);
@@ -155,6 +157,9 @@ function Jump2() {
 function Run() {
 Carl.animation.CrossFade("runold");
 Carl.animation.Play("runold");
+Carl.animation["runold"].speed = 1.4;
+
+
 //Carl.animation["run"].speed = 1.7;
 
 }

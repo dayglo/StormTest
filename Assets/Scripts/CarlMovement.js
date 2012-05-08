@@ -90,20 +90,20 @@ function WaitForDeadPlayerToSettle(){
 
 
 function Start(){
-
-//set the wrapmode of the different animations
-Carl.animation["run"].wrapMode =WrapMode.Loop;
-Carl.animation["walk"].wrapMode =WrapMode.Loop;
-//Carl.animation["run"].speed = 1.7;
-Carl.animation["run"].speed = 1.4;
-
-Carl.animation["slidedownevent"].speed = 1.4;
-Carl.animation["slideupevent"].speed = 1.4;
-
-Carl.animation.Play("run");
-
-ouchText = GameObject.Find("CarlOuchText");
-//ouchText.active = false;
+	//set the wrapmode of the different animations
+	Carl.animation["run"].wrapMode =WrapMode.Loop;
+	Carl.animation["walk"].wrapMode =WrapMode.Loop;
+	//Carl.animation["run"].speed = 1.7;
+	Carl.animation["run"].speed = 1.4;
+	
+//	Carl.animation["slidedownevent"].speed = 1.4;
+//	Carl.animation["slidedown"].wrapMode = WrapMode.ClampForever;
+//	Carl.animation["slideupevent"].speed = 1.4;
+	
+	Carl.animation.Play("run");
+	
+	ouchText = GameObject.Find("CarlOuchText");
+	//ouchText.active = false;
 }
 
 function FixedUpdate() {
@@ -125,73 +125,79 @@ function FixedUpdate() {
 //	previousVelocity = myRigidbody.velocity;
 }
 
+function Update() {
+	if(grounded) {
+		CheckButtons();
+	}
+}
+
+// Check for virtual buttons
+function CheckButtons()
+{
+	for (var evt : Touch in Input.touches)
+	{
+		if(evt.position.x > Screen.width/2) {	// Right.. so slide pressed
+			if (evt.phase == TouchPhase.Moved || evt.phase == TouchPhase.Stationary)
+			{
+				SlideDown();
+			} else if(evt.phase == TouchPhase.Ended) {
+				SlideUp();
+			}
+		} else {	// Left.. so jump pressed
+			if(evt.phase == TouchPhase.Began) {
+				// Fire pressed
+				Jump();
+			}
+		}
+	}
+	// Check for keyboard / mouse buttons instead
+	if(Input.GetButtonDown("Fire1")) Jump();
+	if(Input.GetButtonDown("Fire2")) SlideDown();
+	if(Input.GetButtonUp("Fire2")) SlideUp();
+}
+
 function Jump() {
-	
 	Carl.animation["runold"].speed = 0.3;
 	Carl.animation.Play("jump");
 	Carl.animation.CrossFade("jump");
-	
-	
 	rigidbody.AddRelativeForce(transform.up * jumpForce,ForceMode.Impulse);
 	//Carl.animation.CrossFadeQueued("run",0.3,QueueMode.CompleteOthers);
 	//Carl.animation["walk"].speed = 1.7;
-	//Carl.animation.Play("walk");
-
-	
+	//Carl.animation.Play("walk");	
 }
 
 function Jump2() {
-	
-
 	Carl.animation.Play("jump");
 	//Carl.animation.CrossFade("jump");
-	
 	rigidbody.AddRelativeForce(transform.up * jumpForce,ForceMode.Impulse);
 	//Carl.animation.CrossFadeQueued("run",0.3,QueueMode.CompleteOthers);
 	//Carl.animation["walk"].speed = 1.7;
-	//Carl.animation.Play("walk");
-
-	
+	//Carl.animation.Play("walk");	
 }
 
 function Run() {
-Carl.animation.CrossFade("runold");
-Carl.animation.Play("runold");
-Carl.animation["runold"].speed = 1.4;
-
-
-//Carl.animation["run"].speed = 1.7;
-
+	Carl.animation.CrossFade("runold");
+	Carl.animation.Play("runold");
+	Carl.animation["runold"].speed = 1.4;
+	//Carl.animation["run"].speed = 1.7;
 }
-
-
-function BigJump() {
-Carl.animation.CrossFade("jump");
-Carl.animation.CrossFadeQueued("run",0.3,QueueMode.CompleteOthers);
-//Carl.animation["run"].speed = 1.7;
-
-}
-
-/*
-function Punch() {
-	
-
-	Carl.animation.CrossFade("Punch");
-	Carl.animation.CrossFadeQueued("Walk",0.3,QueueMode.CompleteOthers);
-	
-	
-}
-*/
 
 function ResumeRunning() {
-//Carl.animation.CrossFadeQueued("run",0.1,QueueMode.CompleteOthers);
-sliding=false;
+	yield WaitForSeconds(0.7);
+		//Carl.animation.CrossFadeQueued("run",0.1,QueueMode.CompleteOthers);
+	sliding=false;
+}
 
+
+function Punch() {
+	Carl.animation.CrossFade("Punch");
+	Carl.animation.CrossFadeQueued("Walk",0.3,QueueMode.CompleteOthers);
 }
 
 function SlideUp() {
-	yield WaitForSeconds (1);
-	Carl.animation.CrossFade("slideupevent");
+//	yield WaitForSeconds (1);
+	Carl.animation.CrossFade("slideup");
+	StartCoroutine(ResumeRunning());
 	
 	//Carl.animation.CrossFadeQueued("run",0.1,QueueMode.CompleteOthers);
 	
@@ -205,7 +211,7 @@ function SlideUp() {
 }
 function SlideDown() {
 	
-	Carl.animation.CrossFade("slidedownevent");
+	Carl.animation.CrossFade("slidedown");
 	sliding=true;
 	//Carl.animation.CrossFade("swat");
 	//Carl.animation.CrossFadeQueued("slideup",1.0,QueueMode.CompleteOthers);
@@ -234,11 +240,12 @@ function OnEnable()
    //     FingerGestures.OnFingerStationary += FingerGestures_OnFingerStationary;
    //     FingerGestures.OnFingerStationaryEnd += FingerGestures_OnFingerStationaryEnd;
         
-        
+    /* -- Disabled to use tap events instead (SE)    
     FingerGestures.OnTap += MyFingerGestures_OnTap;
      FingerGestures.OnDoubleTap += MyFingerGestures_OnDoubleTap;
       FingerGestures.OnSwipe += MyFingerGestures_OnSwipe;
      FingerGestures.OnFingerSwipe += MyFingerGestures_OnFingerSwipe;
+     */
      // FingerGestures.OnSwipeDirection += MyFingerGestures_OnSwipe;
 
     
@@ -247,10 +254,12 @@ function OnEnable()
 function OnDisable()
 {
     // unsubscribe from the global tap event
+    /* -- Disabled to use tap events instead
    FingerGestures.OnTap -= MyFingerGestures_OnTap;
  FingerGestures.OnDoubleTap -= MyFingerGestures_OnDoubleTap;
         FingerGestures.OnSwipe -= MyFingerGestures_OnSwipe;
          FingerGestures.OnFingerSwipe -= MyFingerGestures_OnFingerSwipe;
+        */ 
         
        // FingerGestures.OnFingerStationary -= MyFingerGestures_OnFingerStationary;
     //  FingerGestures.OnFingerStationaryEnd -= MyFingerGestures_OnFingerStationaryEnd;
@@ -260,7 +269,7 @@ function OnDisable()
 // Our tap event handler. The method name can be whatever you want.
 
 
-
+/*
 function MyFingerGestures_OnTap( fingerPos : Vector2 )
 {
    // Debug.Log( "TAP detected at " + fingerPos );
@@ -311,6 +320,7 @@ if (grounded) {
  }
 
 }
+*/
 
 /*
 

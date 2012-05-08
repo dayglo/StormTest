@@ -137,7 +137,7 @@ function CheckButtons()
 	for (var evt : Touch in Input.touches)
 	{
 		if(evt.position.x > Screen.width/2) {	// Right.. so slide pressed
-			if (evt.phase == TouchPhase.Moved || evt.phase == TouchPhase.Stationary)
+			if (evt.phase == TouchPhase.Began)
 			{
 				SlideDown();
 			} else if(evt.phase == TouchPhase.Ended) {
@@ -151,9 +151,11 @@ function CheckButtons()
 		}
 	}
 	// Check for keyboard / mouse buttons instead
-	if(Input.GetButtonDown("Fire1")) Jump();
-	if(Input.GetButtonDown("Fire2")) SlideDown();
-	if(Input.GetButtonUp("Fire2")) SlideUp();
+	if(Application.platform != RuntimePlatform.IPhonePlayer) {
+		if(Input.GetButtonDown("Fire1")) Jump();
+		if(Input.GetButtonDown("Fire2")) SlideDown();
+		if(Input.GetButtonUp("Fire2")) SlideUp();
+	}
 }
 
 function Jump() {

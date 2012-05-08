@@ -103,7 +103,7 @@ Carl.animation["slideupevent"].speed = 1.4;
 Carl.animation.Play("run");
 
 ouchText = GameObject.Find("CarlOuchText");
-ouchText.active = false;
+//ouchText.active = false;
 }
 
 function FixedUpdate() {

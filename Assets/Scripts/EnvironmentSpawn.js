@@ -2,6 +2,7 @@
 
 // Object which created obstacles will be parented to
 public var pathObject : Transform;
+public var butterflyPathObject : Transform;
 // Object tpo spawn for butterflies
 public var butterflyPrefab : Transform;
 // Spawn frequency for objects
@@ -84,7 +85,7 @@ function FixedUpdate() {
 				// Instantiate it where we are currently located
 				var butterfly : Transform = Instantiate(butterflyPrefab, v, transform.rotation);
 				// Attach it to the path object
-				butterfly.parent = pathObject;
+				butterfly.parent = butterflyPathObject;
 				// Reduce butterflies left count
 				butterfliesLeft--;
 				if(butterfliesLeft) {

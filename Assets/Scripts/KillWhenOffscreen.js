@@ -1,5 +1,6 @@
 #pragma strict
 
+
 private var hasAppeared : int = 0;
 
 function OnBecameVisible() {

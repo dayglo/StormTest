@@ -136,17 +136,20 @@ function CheckButtons()
 {
 	for (var evt : Touch in Input.touches)
 	{
-		if(evt.position.x > Screen.width/2) {	// Right.. so slide pressed
-			if (evt.phase == TouchPhase.Began)
-			{
-				SlideDown();
-			} else if(evt.phase == TouchPhase.Ended) {
-				SlideUp();
-			}
-		} else {	// Left.. so jump pressed
-			if(evt.phase == TouchPhase.Began) {
-				// Fire pressed
-				Jump();
+		// Check we are at the bottom of the screen (push buttons)
+		if(evt.position.y < Screen.height / 6) {
+			if(evt.position.x > Screen.width/2) {	// Right.. so slide pressed
+				if (evt.phase == TouchPhase.Began)
+				{
+					SlideDown();
+				} else if(evt.phase == TouchPhase.Ended) {
+					SlideUp();
+				}
+			} else {	// Left.. so jump pressed
+				if(evt.phase == TouchPhase.Began) {
+					// Fire pressed
+					Jump();
+				}
 			}
 		}
 	}

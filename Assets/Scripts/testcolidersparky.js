@@ -12,8 +12,6 @@ function OnTriggerEnter (other : Collider) {
 
 	//if (other.tag.ToString() != "LeftArm" || other.tag.ToString() != "LeftForeArm")
 
-	Debug.Log("***********Simon collider " + other.tag);
-
 	switch(other.tag) {
 		case "Environment":
 			SendMessageUpwards ("KillPlayer");

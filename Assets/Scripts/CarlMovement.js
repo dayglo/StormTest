@@ -137,7 +137,7 @@ function CheckButtons()
 	for (var evt : Touch in Input.touches)
 	{
 		// Check we are at the bottom of the screen (push buttons)
-		if(evt.position.y < Screen.height / 6) {
+		if(evt.position.y < Screen.height / 4) {
 			if(evt.position.x > Screen.width/2) {	// Right.. so slide pressed
 				if (evt.phase == TouchPhase.Began)
 				{

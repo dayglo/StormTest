@@ -32,7 +32,7 @@ function FixedUpdate () {
 		for (var evt : Touch in Input.touches)
 		{
 			// Check we are above the bottom of the screen (push buttons)
-			if(evt.position.y > Screen.height / 6) {
+			if(evt.position.y > Screen.height / 4) {
 					if (evt.phase == TouchPhase.Moved || evt.phase == TouchPhase.Began)
 					{
 						var ray : Ray = Camera.main.ScreenPointToRay( evt.position );

@@ -25,7 +25,7 @@ function OnTriggerEnter (theCollision : Collider) {
  	if (theCollision.gameObject.tag == "Gecko")  {
 		iTween.ScaleTo(gameObject,Vector3.zero,1);
 		p.Play();
-		theCollision.gameObject.animation.Play("tongue");
+		theCollision.gameObject.animation.Play("modo_Anim");
 		// Make Gecko stick out his tongue
 		yield WaitForSeconds(1);
 		Debug.Log("Hit the gecko");

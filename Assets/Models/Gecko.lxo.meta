@@ -4,6 +4,9 @@ ModelImporter:
   fileIDToRecycleName:
     4300000: Body
     4300002: Tongue
+    7400000: modo_Anim //// Gecko
+    7400002: modo_Anim //// Body
+    7400004: modo_Anim //// Tongue
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -26,7 +29,7 @@ ModelImporter:
       loop: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: .200000003
+    globalScale: .00200000009
     meshCompression: 0
     addColliders: 0
     swapUVChannels: 0
@@ -51,42 +54,14 @@ ModelImporter:
         first: 4
         second: 801a0600
       data:
-        first: 111
-        second: 605fa900
-    Body:
-      data:
-        first: 1
-        second: a8860100
-      data:
-        first: 4
-        second: 881a0600
-      data:
         first: 23
         second: 62182300
       data:
         first: 33
         second: a25a3200
-    Camera:
       data:
-        first: 1
-        second: a4860100
-      data:
-        first: 4
-        second: 841a0600
-    Directional_Light:
-      data:
-        first: 1
-        second: a2860100
-      data:
-        first: 4
-        second: 821a0600
-    Render:
-      data:
-        first: 1
-        second: aa860100
-      data:
-        first: 4
-        second: 8a1a0600
+        first: 111
+        second: 605fa900
     Tongue:
       data:
         first: 1

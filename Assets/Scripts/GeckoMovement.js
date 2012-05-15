@@ -8,9 +8,9 @@ private var calibrationMatrix : Matrix4x4;
 
 function Start () {
 	// Calibrate accelormeter
-	if(Application.platform == RuntimePlatform.IPhonePlayer) {
-		CalibrateAccelerometer();
-	}
+//	if(Application.platform == RuntimePlatform.IPhonePlayer) {
+//		CalibrateAccelerometer();
+//	}
 }
 
 function FixedUpdate () {
@@ -35,11 +35,13 @@ function FixedUpdate () {
 			if(evt.position.y > Screen.height / 6) {
 					if (evt.phase == TouchPhase.Moved || evt.phase == TouchPhase.Began)
 					{
-						var cameraTransform = Camera.main.transform.InverseTransformPoint(0, 0, 0);
-						var pos : Vector3 = Camera.main.ScreenToWorldPoint(new Vector3 (evt.position.x, evt.position.y, cameraTransform.z - 0.5));
+						var ray : Ray = Camera.main.ScreenPointToRay( evt.position );
+						var pos : Vector3 = ray.GetPoint( (Camera.main.transform.position - transform.position).magnitude );
+						//var cameraTransform = Camera.main.transform.InverseTransformPoint(0, 0, 0);
+						//var pos : Vector3 = Camera.main.ScreenToWorldPoint(new Vector3 (evt.position.x, evt.position.y, transform.position.z));
 
 					    //var p : Vector3 = Camera.main.ScreenToWorldPoint (Vector3 (0.0,evt.position.y,0.0));
-						transform.localPosition.y = pos.y;
+						transform.position.y = pos.y;
 					}
 			}
 		}

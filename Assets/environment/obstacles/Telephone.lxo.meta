@@ -3,6 +3,7 @@ guid: deb4d0dd8635a4df29cfdc6cf6f420eb
 ModelImporter:
   fileIDToRecycleName:
     4300000: Mesh
+    7400000: modo_Anim //// Telephone
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -20,7 +21,7 @@ ModelImporter:
     clipAnimations: []
   meshes:
     lODScreenPercentages: []
-    globalScale: .5
+    globalScale: .00499999989
     meshCompression: 0
     addColliders: 0
     swapUVChannels: 0
@@ -45,39 +46,11 @@ ModelImporter:
         first: 4
         second: 841a0600
       data:
-        first: 111
-        second: 605fa900
-    Camera:
-      data:
-        first: 1
-        second: a8860100
-      data:
-        first: 4
-        second: 881a0600
-    Directional_Light:
-      data:
-        first: 1
-        second: a6860100
-      data:
-        first: 4
-        second: 861a0600
-    Mesh:
-      data:
-        first: 1
-        second: a0860100
-      data:
-        first: 4
-        second: 801a0600
-      data:
         first: 23
         second: 60182300
       data:
         first: 33
         second: a05a3200
-    Render:
       data:
-        first: 1
-        second: a2860100
-      data:
-        first: 4
-        second: 821a0600
+        first: 111
+        second: 605fa900

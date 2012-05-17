@@ -29,7 +29,7 @@ ModelImporter:
       loop: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: .00200000009
+    globalScale: .00300000003
     meshCompression: 0
     addColliders: 0
     swapUVChannels: 0
@@ -54,14 +54,21 @@ ModelImporter:
         first: 4
         second: 801a0600
       data:
+        first: 111
+        second: 605fa900
+    Body:
+      data:
+        first: 1
+        second: a2860100
+      data:
+        first: 4
+        second: 821a0600
+      data:
         first: 23
         second: 62182300
       data:
         first: 33
         second: a25a3200
-      data:
-        first: 111
-        second: 605fa900
     Tongue:
       data:
         first: 1

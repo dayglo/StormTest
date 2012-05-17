@@ -67,7 +67,7 @@ function HierarchytoLines (currentNode : Transform, transformList : List.<Transf
 		case 0:	
 		
 			//reached the end of the line, so create the line object.	
-			Debug.Log("Adding final point "+ currentNode.name +"("+ currentNodeNumber + ") to line" +currentLineNumber);
+			//Debug.Log("Adding final point "+ currentNode.name +"("+ currentNodeNumber + ") to line" +currentLineNumber);
 			
 			//add the final position to the line
 			transformList.Add(currentNode);
@@ -94,7 +94,7 @@ function HierarchytoLines (currentNode : Transform, transformList : List.<Transf
 		
 		case 1:
 			for (var child : Transform in currentNode) {		
-				Debug.Log("Adding point at " + currentNode.name +"("+  currentNodeNumber +") to continue line" +currentLineNumber);
+				//Debug.Log("Adding point at " + currentNode.name +"("+  currentNodeNumber +") to continue line" +currentLineNumber);
     			currentNodeNumber++;
     			
     			//continue the line
@@ -140,7 +140,7 @@ function HierarchytoLines (currentNode : Transform, transformList : List.<Transf
 				
 					currentLineNumber++;
 					currentNodeNumber = 0;
-					Debug.Log("Creating line " + currentLineNumber + " starting from " + currentNode.name + " going through " + child.name);
+					//Debug.Log("Creating line " + currentLineNumber + " starting from " + currentNode.name + " going through " + child.name);
 					
 					//make a new list of transforms...
 					var myTransformList = new List.<Transform>();

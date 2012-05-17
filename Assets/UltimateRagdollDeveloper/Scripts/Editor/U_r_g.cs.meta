@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 01d3a70db0164e149a6b3d603565767c
+labels:
+- ragdoll
+- generator
+- automatic
+- ultimate
+- urg
+- ragdolls
+- joint
+- collider
+- rigidbody
+- arc
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - vargampaperdoll: {fileID: 2800000, guid: d504eab86131b35479f9297770f26731, type: 1}
+  executionOrder: 0
+  icon: {instanceID: 0}

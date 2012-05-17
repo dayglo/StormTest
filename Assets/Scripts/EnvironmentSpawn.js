@@ -7,10 +7,12 @@ public var butterflyPathObject : Transform;
 public var butterflyPrefab : Transform;
 // Spawn frequency for objects
 public var framesBetweenSpawns : int = 200;
+// Bird Height Offset
+public var birdHeightOffset : float = 0.5f;
 // Array of jump over game objects
-public var jumpObstacles : Transform [];
+public var jumpObstacles : Obstacle [];
 // Array of slide under game objects
-public var slideObstacles : Transform [];
+public var slideObstacles : Obstacle [];
 // Butterfly spawn heights
 public var butterflyMinHeight : float = 0.0;
 public var butterflyMaxHeight : float = 2.0;
@@ -25,7 +27,17 @@ private var butterflySpawnCountdown : int;		// Countdown to next spawn of butter
 private var butterfliesLeft : int;				// How many butterflies are left in current sequence
 private var butterflyGapLeft : int;				// How many frames are left until the next butterfly in the sequence
 private var butterflyHeight : float;			// Current height for spawned butterflies
+private var localrot : Vector4;
 
+// Class for each Obstacle to spawn
+class Obstacle
+{
+	var prefab : Transform;					// Object to spawn
+	var rotateY : float = 270.0f;			// Rotation around y axis
+	var animMove : String = "Walk";			// Name of normal anim		
+	var animDie : String = "Death";			// Name of normal anim		
+}
+	
 function Start () {
 	// Initialise frame countdown for object spawns
 	frameCountdown = framesBetweenSpawns;
@@ -47,26 +59,42 @@ function FixedUpdate() {
 		// Spawn a new object, first pick if it is a jump or a slide object
 		var r : int = Random.Range(0, 2);
 		var p: int;
+		var o : Obstacle;
 		var s: Transform;
 		var obstacle : Transform;
 		if(r) {
 			// 1, so jump object.  Pick a random object from the list
 			p = Random.Range(0, jumpObstacles.length);
 			// Get object to spawn
-			s = jumpObstacles[p];
+			o = jumpObstacles[p];
 			// Instantiate it where we are currently located
-			obstacle = Instantiate(s, transform.position, transform.rotation);
+			obstacle = Instantiate(o.prefab, transform.position, transform.rotation);
 			// Attach it to the path object
 			obstacle.parent = pathObject;
+			// Now rotate it to path right direction
+			obstacle.Rotate(Vector3(0, o.rotateY, 0));
+			// Play walk animation
+			obstacle.animation.Play(o.animMove);
 		} else {
 			// 1, so slide object.  Pick a random object from the list
 			p = Random.Range(0, slideObstacles.length);
 			// Get object to spawn
-			s = slideObstacles[p];
-			// Instantiate it where we are currently located
-			obstacle = Instantiate(s, transform.position, transform.rotation);
+			o = slideObstacles[p];
+			// Instantiate it where we are currently located plus rotation
+			obstacle = Instantiate(o.prefab, transform.position, transform.rotation);
 			// Attach it to the path object
 			obstacle.parent = pathObject;
+			// Now rotate it to path right direction
+			obstacle.Rotate(Vector3(0, o.rotateY, 0));
+			// Check if it is a bird
+			var sOff : int = o.prefab.name.IndexOf("Raven");
+			if(sOff > 1) {
+				// Raven so apply height offset
+				obstacle.Translate(Vector3(0, birdHeightOffset, 0));
+				Debug.Log("Offset Height");
+			}
+			// Play walk animation
+			obstacle.animation.Play(o.animMove);
 		}		
 		frameCountdown = framesBetweenSpawns;
 	} else {

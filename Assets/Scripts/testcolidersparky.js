@@ -14,13 +14,14 @@ function OnTriggerEnter (other : Collider) {
 
 	switch(other.tag) {
 		case "Environment":
+			Debug.Log("died " + other.name);
 			SendMessageUpwards ("KillPlayer");
 		break;
 		
 		case "Butterflies":
-			currentscore = System.Convert.ToInt32(ouchText.guiText.text);
-			currentscore += 1;
-			ouchText.guiText.text =  currentscore.ToString();
+			//currentscore = System.Convert.ToInt32(ouchText.guiText.text);
+			//currentscore += 1;
+			//ouchText.guiText.text =  currentscore.ToString();
 		break;
 		
 		default:

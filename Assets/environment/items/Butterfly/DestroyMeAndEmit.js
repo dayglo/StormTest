@@ -16,6 +16,7 @@ function Update () {
 
 function OnTriggerEnter (theCollision : Collider) {
 	if (theCollision.gameObject.tag == "Player")  {
+		scoring.addscore(10);
 		iTween.ScaleTo(gameObject,Vector3.zero,1);
 		p.Play();
 		yield WaitForSeconds(1);
@@ -23,6 +24,7 @@ function OnTriggerEnter (theCollision : Collider) {
 		Destroy(gameObject);
  	}
  	if (theCollision.gameObject.tag == "Gecko")  {
+ 		scoring.addscore(10);
 		iTween.ScaleTo(gameObject,Vector3.zero,1);
 		p.Play();
 		theCollision.gameObject.animation.Play("modo_Anim");

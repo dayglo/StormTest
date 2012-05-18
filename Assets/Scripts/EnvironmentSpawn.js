@@ -4,7 +4,7 @@
 public var pathObject : Transform;
 public var butterflyPathObject : Transform;
 // Object tpo spawn for butterflies
-public var butterflyPrefab : Transform;
+public var butterflyPrefab : Transform[];
 // Spawn frequency for objects
 public var framesBetweenSpawns : int = 200;
 // Bird Height Offset
@@ -109,9 +109,13 @@ function FixedUpdate() {
 				// Create a position vector for it
 				var v : Vector3 = transform.position;
 				v.y = v.y + butterflyHeight;
+				
+				//select a butterfly
+				//currently random
+				
 				// Spawn a new butterfly at that position
 				// Instantiate it where we are currently located
-				var butterfly : Transform = Instantiate(butterflyPrefab, v, transform.rotation);
+				var butterfly : Transform = Instantiate(butterflyPrefab[Random.Range(0,butterflyPrefab.length)], v, transform.rotation);
 				// Attach it to the path object
 				butterfly.parent = butterflyPathObject;
 				// Reduce butterflies left count

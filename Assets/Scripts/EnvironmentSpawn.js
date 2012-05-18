@@ -8,15 +8,15 @@ public var butterflyPrefab : Transform[];
 // Spawn frequency for objects
 public var framesBetweenSpawns : int = 200;
 // Bird Height Offset
-public var birdHeightOffset : float = 0.5f;
+public var birdHeightOffset : float = 0.7f;
 // Array of jump over game objects
 public var jumpObstacles : Obstacle [];
 // Array of slide under game objects
 public var slideObstacles : Obstacle [];
 // Butterfly spawn heights
 public var butterflyMinHeight : float = 0.0;
-public var butterflyMaxHeight : float = 2.0;
-public var framesBetweenButterflySpawns : int = 400;
+public var butterflyMaxHeight : float = 2.7;
+public var framesBetweenButterflySpawns : int = 100;
 public var framesBetweenButterflies : int = 15;
 public var butterflySeqMin : int = 3;
 public var butterflySeqMax : int = 10;

@@ -74,7 +74,7 @@ function FixedUpdate() {
 			// Now rotate it to path right direction
 			obstacle.Rotate(Vector3(0, o.rotateY, 0));
 			// Play walk animation
-			obstacle.animation.Play(o.animMove);
+			if(o.animMove.Length > 0) obstacle.animation.Play(o.animMove);
 		} else {
 			// 1, so slide object.  Pick a random object from the list
 			p = Random.Range(0, slideObstacles.length);
@@ -94,7 +94,7 @@ function FixedUpdate() {
 				Debug.Log("Offset Height");
 			}
 			// Play walk animation
-			obstacle.animation.Play(o.animMove);
+			if(o.animMove.Length > 0) obstacle.animation.Play(o.animMove);
 		}		
 		frameCountdown = framesBetweenSpawns;
 	} else {

@@ -22,9 +22,11 @@ function FindTopParent() : Transform
 
 function OnTriggerEnter (other : Collider) 
 {
-	carlMovement.KillPlayer();
-	var top : Transform = FindTopParent();
-	// Play death animation on self
-	top.animation.Play("Death");
-	Debug.Log("Environment Kill script");
+	if(other.gameObject.transform.root.tag == "Player") {
+		carlMovement.KillPlayer();
+		var top : Transform = FindTopParent();
+		// Play death animation on self
+		top.animation.Play("Death");
+		Debug.Log("Environment Kill script");
+	}
 }

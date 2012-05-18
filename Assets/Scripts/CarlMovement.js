@@ -5,6 +5,8 @@ var grounded : boolean;
 private var sliding : boolean;
 private var jumpCount : int;
 
+var runSpeed : float = 1.4;
+
 private var ouchText : GameObject;
 
 //collider, rigidbody, emitter collections
@@ -94,7 +96,7 @@ function Start(){
 	Carl.animation["run"].wrapMode =WrapMode.Loop;
 	Carl.animation["walk"].wrapMode =WrapMode.Loop;
 	//Carl.animation["run"].speed = 1.7;
-	Carl.animation["run"].speed = 1.4;
+	Carl.animation["run"].speed = runSpeed;
 	
 //	Carl.animation["slidedownevent"].speed = 1.4;
 //	Carl.animation["slidedown"].wrapMode = WrapMode.ClampForever;
@@ -107,6 +109,8 @@ function Start(){
 }
 
 function FixedUpdate() {
+	Carl.animation["run"].speed = runSpeed;
+
 	Debug.DrawRay (transform.position, -transform.up * 0.05, Color.green);
 	 if (Physics.Raycast(transform.position, -transform.up, 0.05)) {
 		// Debug.Log("grounded");

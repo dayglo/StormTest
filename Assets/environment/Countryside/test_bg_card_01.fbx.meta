@@ -3,6 +3,7 @@ guid: 72583de44e02449f1a40605fa9f1f0ee
 ModelImporter:
   fileIDToRecycleName:
     4300000: Mesh
+    7400000: modo_Anim //// test_bg_card_01
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -54,6 +55,13 @@ ModelImporter:
       data:
         first: 4
         second: 801a0600
+    Directional Light:
+      data:
+        first: 1
+        second: a6860100
+      data:
+        first: 4
+        second: 861a0600
     Mesh:
       data:
         first: 1

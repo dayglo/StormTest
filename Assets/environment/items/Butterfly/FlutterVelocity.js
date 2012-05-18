@@ -15,7 +15,7 @@ private var correction : float;
 
 function Start () {
 	myTransform = transform;
-	targetPosition =  Vector3(-5,Random.Range(8.4,9.0),0);
+	targetPosition =  Vector3(-5,Random.Range(6.4,7.0),0);
 	StartCoroutine("BuzzAround");
 }
 	

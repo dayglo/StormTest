@@ -11,7 +11,6 @@ private var jumpCount : int;
 var runSpeed : float = 1.4;
 
 private var ouchText : GameObject;
-private var startRotationSpeed : float;
 //collider, rigidbody, emitter collections
 private var colliderComponents : Component[];
 private var rigidbodyComponents : Component[];
@@ -38,7 +37,7 @@ function Awake() {
     //playerModelCrashEmitterComponents = Carl.transform.GetComponentsInChildren (CrashEmitter); - TODO: GC -import crashemitter component for flying dust on crash.
     
     worldRotator = GameObject.FindGameObjectWithTag("WorldRotator").GetComponent("WorldRotator") as WorldRotator;
-	startRotationSpeed = worldRotator.masterSpeed;
+	
 	
 }
 
@@ -58,16 +57,16 @@ function KillPlayer () {
 	for (var comp1 : Component in rigidbodyComponents) {
         var rigid = comp1 as Rigidbody;
         rigid.isKinematic = false;
-        rigid.velocity = Vector3(1,1.4,0) * 1.4;
+        rigid.velocity = Vector3(1,1.4,0) * (worldRotator.masterSpeed /1.8);
     }
         
     for (var comp1 : Component in colliderComponents) {
         var coll = comp1 as Collider;
         coll.isTrigger = false;
     }
-    		
+ 
 
-	iTween.ValueTo(gameObject,{"from":startRotationSpeed,"time":2,"to":0,"onupdate":"updateFromValue","easetype":iTween.EaseType.easeOutQuart}	);
+	iTween.ValueTo(gameObject,{"from":worldRotator.masterSpeed,"time":worldRotator.masterSpeed /2.2,"to":0,"onupdate":"updateFromValue","easetype":iTween.EaseType.easeOutQuart}	);
 
 	StartCoroutine(WaitForDeadPlayerToSettle());
 

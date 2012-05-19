@@ -58,7 +58,7 @@ function KillPlayer () {
 	for (var comp1 : Component in rigidbodyComponents) {
         var rigid = comp1 as Rigidbody;
         rigid.isKinematic = false;
-        rigid.velocity = Vector3(1,1.4,0) * 2;
+        rigid.velocity = Vector3(1,1.4,0) * 1.4;
     }
         
     for (var comp1 : Component in colliderComponents) {

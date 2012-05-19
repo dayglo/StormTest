@@ -44,8 +44,6 @@ function LateUpdate(){
         shadow.localScale -= shadow.localScale * (distanceFromShadow * 0.5);
         
         shadowMat.color.a = 1- (distanceFromShadow * 0.5);
-
-        
         shadow.position = hit.point + positionAdjust;
         shadow.rotation = Quaternion.LookRotation(Vector3.forward, hit.normal);
 

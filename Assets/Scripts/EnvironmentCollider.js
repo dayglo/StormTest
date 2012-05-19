@@ -13,11 +13,17 @@ function FindTopParent() : Transform
 {
 	var p : Transform = transform.parent;
 	while (p.name != "prop_origin" && p.tag != "Environment") {
-		Debug.Log(p.name);
+//		Debug.Log(p.name);
 		p = p.parent;
 	} ;
 	if(p.name == "prop_origin") return null;
 	return p;
+}
+
+function KillSelf()
+{
+	var top : Transform = FindTopParent();
+	if(top) DestroyObject(top.gameObject);
 }
 
 function OnTriggerEnter (other : Collider) 
@@ -27,6 +33,6 @@ function OnTriggerEnter (other : Collider)
 		var top : Transform = FindTopParent();
 		// Play death animation on self
 		top.animation.Play("Death");
-		Debug.Log("Environment Kill script");
+//		Debug.Log("Environment Kill script");
 	}
 }

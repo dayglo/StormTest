@@ -9,10 +9,8 @@ function Update () {
 }
 
 function OnTriggerEnter (theCollision : Collider) {
-	if (theCollision.gameObject.tag == "Environment" || theCollision.gameObject.tag == "Butterflies")  {
-		// Need to destroy object as it hits the kill zone
-		Destroy(theCollision.gameObject);
-		
-		Debug.Log("Destroyed object");
- 	}
+	Debug.Log(String.Format("Object {0} hit object {1}", gameObject.name, theCollision.gameObject.name));
+	// Need to destroy object as it hits the kill zone
+	var env : EnvironmentCollider = theCollision.gameObject.GetComponent("EnvironmentCollider") as EnvironmentCollider;
+	env.KillSelf();
 }

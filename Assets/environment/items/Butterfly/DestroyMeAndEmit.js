@@ -35,3 +35,13 @@ function OnTriggerEnter (theCollision : Collider) {
  	}
 
 }
+
+function KillSelf()
+{
+	scoring.addscore(collectScore);
+	iTween.ScaleTo(gameObject,Vector3.zero,1);
+	p.Play();
+	yield WaitForSeconds(1);
+	Debug.Log("Destroyed object");
+	Destroy(gameObject);
+}

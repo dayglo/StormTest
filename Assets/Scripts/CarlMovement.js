@@ -321,6 +321,7 @@ function OnEnable()
     FingerGestures.OnDragBegin += FingerGestures_OnDragBegin;
     FingerGestures.OnDragMove += FingerGestures_OnDragMove;
     FingerGestures.OnDragEnd += FingerGestures_OnDragEnd;
+    FingerGestures.OnTap += FingerGestures_OnTap;
 }
  
 function OnDisable()
@@ -328,6 +329,7 @@ function OnDisable()
     FingerGestures.OnDragBegin -= FingerGestures_OnDragBegin;
     FingerGestures.OnDragMove -= FingerGestures_OnDragMove;
     FingerGestures.OnDragEnd -= FingerGestures_OnDragEnd;
+    FingerGestures.OnTap -= FingerGestures_OnTap;
 }
 
 // New drag event handlers
@@ -338,10 +340,10 @@ function FingerGestures_OnDragBegin( fingerPos : Vector2, startPos : Vector2 )
 
 function FingerGestures_OnDragMove( fingerPos : Vector2, delta : Vector2 )
 {
-	Debug.Log(String.Format("OnDragMove: offset x={0}, y={1}", delta.x, delta.y));
+	//Debug.Log(String.Format("OnDragMove: offset x={0}, y={1}", delta.x, delta.y));
 	// Check which direction we are moving in
 	// Moving up?
-	if(delta.y > (3 * Mathf.Abs(delta.x))) {	// moving up
+	if(delta.y > (1 * Mathf.Abs(delta.x))) {	// moving up
 		if(sliding) {
 			SlideUp();
 			return;
@@ -353,14 +355,14 @@ function FingerGestures_OnDragMove( fingerPos : Vector2, delta : Vector2 )
 		return;
 	}
 	// Moving down?
-	if(delta.y < 0 && Mathf.Abs(delta.y) > (3 * Mathf.Abs(delta.x))) {
+	if(delta.y < 0 && Mathf.Abs(delta.y) > (1 * Mathf.Abs(delta.x))) {
 		if(!sliding && grounded) SlideDown();
 	}
 	// Moving Right or left?
 	if(grounded && !sliding) {
-		if(delta.x > (3 * Mathf.Abs(delta.y))) {	// Moving right (top to bottom)
+		if(delta.x > (1 * Mathf.Abs(delta.y))) {	// Moving right (top to bottom)
 			MoveTopToBottom();
-		} else if(delta.x < 0 && Mathf.Abs(delta.x) > (3 * Mathf.Abs(delta.y))) {	// Moving Left to right (bottom to top)
+		} else if(delta.x < 0 && Mathf.Abs(delta.x) > (1 * Mathf.Abs(delta.y))) {	// Moving Left to right (bottom to top)
 			MoveBottomToTop();
 		}
 	}
@@ -369,4 +371,26 @@ function FingerGestures_OnDragMove( fingerPos : Vector2, delta : Vector2 )
 function FingerGestures_OnDragEnd( fingerPos : Vector2 )
 {
 
+}
+
+function FingerGestures_OnTap( fingerPos : Vector2 )
+{
+	var go : GameObject = PickObject(fingerPos);
+	// Check if we tapped a butterfly
+	if(go.tag == "Butterflies") {	
+		// Get Destroy Emit script
+		var comp : DestroyMeAndEmit = go.GetComponent("DestroyMeAndEmit");
+		comp.KillSelf();
+	}
+}
+
+function PickObject( screenPos : Vector2 ) : GameObject
+{
+    var ray : Ray = Camera.main.ScreenPointToRay( screenPos );
+    var hit : RaycastHit;
+
+    if( Physics.Raycast( ray, hit ) )
+        return hit.collider.gameObject;
+
+    return null;
 }

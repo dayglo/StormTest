@@ -1,5 +1,5 @@
 #pragma strict
-
+public var jumpOverScore : int = 10;
 function Start () {
 
 }
@@ -13,4 +13,5 @@ function OnTriggerEnter (theCollision : Collider) {
 	// Need to destroy object as it hits the kill zone
 	var env : EnvironmentCollider = theCollision.gameObject.GetComponent("EnvironmentCollider") as EnvironmentCollider;
 	env.KillSelf();
+	scoring.addscore(jumpOverScore);
 }

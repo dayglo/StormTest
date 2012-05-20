@@ -3,11 +3,18 @@
 import System.Collections;
 
  var Carl : GameObject;
-var jumpForce : int = 4.0f;
+var jumpForce : float = 6.5f;
+var bigjumpThreshhold = 100.0f;
 var grounded : boolean;
 private var sliding : boolean;
 private var jumpCount : int;
-
+private var dragStart : Vector2;
+// Path movement variables
+public var pathSwapStep : float = 0.2f;
+private var topSpawn : Transform;
+private var bottomSpawn : Transform;
+private var topPath : boolean = true;
+private var changingPath : boolean = false;
 var runSpeed : float = 1.4;
 
 private var ouchText : GameObject;
@@ -19,6 +26,8 @@ private var rigidbodyComponents : Component[];
 private var colliders : Collider[];
 private var rigidbodies : Rigidbody[];
 //private var playerModelCrashEmitters : CrashEmitter[];  TODO: GC -import crashemitter component for flying dust on crash.
+public var maxSlideTime : float = 2.0f;	// Maximum length of time sliding
+private var slideTime : float = 2.0f;	// current slide time
 
 var myRigidbody : Rigidbody;
 var previousVelocity: Vector3;
@@ -99,6 +108,9 @@ function WaitForDeadPlayerToSettle(){
 
 
 function Start(){
+	// Find top and bottom spawn objects
+	topSpawn = GameObject.Find("Spawn Zone Top").transform;
+	bottomSpawn = GameObject.Find("Spawn Zone Bottom").transform;
 	//set the wrapmode of the different animations
 	Carl.animation["run"].wrapMode =WrapMode.Loop;
 	Carl.animation["walk"].wrapMode =WrapMode.Loop;
@@ -118,33 +130,63 @@ function Start(){
 function FixedUpdate() {
 	Carl.animation["run"].speed = runSpeed;
 
-	Debug.DrawRay (transform.position, -transform.up * 0.05, Color.green);
-	 if (Physics.Raycast(transform.position, -transform.up, 0.05)) {
-		// Debug.Log("grounded");
-	    grounded = true;
-	    //reset our jump count since we hit the ground
-	    jumpCount = 0;
-	    if (!sliding) {
-	    	Carl.animation.CrossFade("run");
+	// Add check to make sure we are falling before raycasting to prevent double jumps (SE)
+	if(rigidbody.velocity.y <0.0) {
+		Debug.DrawRay (transform.position, -transform.up * 0.05, Color.green);
+		 if (Physics.Raycast(transform.position, -transform.up, 0.05)) {
+			// Debug.Log("grounded");
+		    grounded = true;
+		    //reset our jump count since we hit the ground
+		    jumpCount = 0;
+		    if (!sliding) {
+		    	Carl.animation.CrossFade("run");
+		    }
+	    	//Carl.animation.CrossFade("run");
+	    } else {
+		    grounded=false;
+		   // Carl.animation.CrossFade("jump");
+		   // Debug.Log("Not grounded");
 	    }
-    	//Carl.animation.CrossFade("run");
-    } else {
-	    grounded=false;
-	   // Carl.animation.CrossFade("jump");
-	   // Debug.Log("Not grounded");
-    }
+	}
+	// Check if we are changing path and have reached destination
+	if(changingPath) {
+		if(topPath) {	// currently top so moving to bottom
+			if(transform.position.z <= bottomSpawn.position.z) {	// Reach destination
+				rigidbody.velocity=Vector3(0.0, 0.0, 0.0);	// Stop moving
+				changingPath=false;
+				topPath=false;
+				transform.position.z = bottomSpawn.position.z;
+			} else transform.position.z -= pathSwapStep;
+		} else {	// moving from bottom to top
+			if(transform.position.z >= topSpawn.position.z) {	// Reach destination
+				rigidbody.velocity=Vector3(0.0, 0.0, 0.0);	// Stop moving
+				changingPath=false;
+				topPath=true;
+				transform.position.z = topSpawn.position.z;
+			} else transform.position.z += pathSwapStep;
+		}
+	}
+			
 //	previousVelocity = myRigidbody.velocity;
 }
 
 function Update() {
 	if(grounded) {
 		CheckButtons();
+		if(sliding) {
+			slideTime -= Time.deltaTime;
+			if(slideTime < 0.0f) {
+				Debug.Log("--Slide up flag--");
+				SlideUp();
+			}
+		}	
 	}
 }
 
 // Check for virtual buttons
 function CheckButtons()
 {
+/*
 	for (var evt : Touch in Input.touches)
 	{
 		// Check we are at the bottom of the screen (push buttons)
@@ -154,7 +196,7 @@ function CheckButtons()
 				{
 					SlideDown();
 				} else if(evt.phase == TouchPhase.Ended) {
-					SlideUp();
+					//SlideUp();
 				}
 			} else {	// Left.. so jump pressed
 				if(evt.phase == TouchPhase.Began) {
@@ -164,31 +206,41 @@ function CheckButtons()
 			}
 		}
 	}
+	*/
 	// Check for keyboard / mouse buttons instead
 	if(Application.platform != RuntimePlatform.IPhonePlayer) {
 		if(Input.GetButtonDown("Fire1")) Jump();
 		if(Input.GetButtonDown("Fire2")) SlideDown();
-		if(Input.GetButtonUp("Fire2")) SlideUp();
+		//if(Input.GetButtonUp("Fire2")) SlideUp();
+		var move : float = Input.GetAxis("Horizontal");
+		if(move == -1) MoveBottomToTop();
+		if(move == 1) MoveTopToBottom();
 	}
 }
 
 function Jump() {
+	grounded = false;
 	Carl.animation["runold"].speed = 0.3;
 	Carl.animation.Play("jump");
 	Carl.animation.CrossFade("jump");
-	rigidbody.AddRelativeForce(transform.up * jumpForce,ForceMode.Impulse);
+	//rigidbody.AddRelativeForce(transform.up * jumpForce,ForceMode.Impulse);
+	rigidbody.velocity=Vector3(0.0, jumpForce, 0.0);
 	//Carl.animation.CrossFadeQueued("run",0.3,QueueMode.CompleteOthers);
 	//Carl.animation["walk"].speed = 1.7;
 	//Carl.animation.Play("walk");	
+	Debug.Log("-- Normal Jump");
 }
 
-function Jump2() {
+function BigJump() {
+	Carl.animation["runold"].speed = 0.3;
 	Carl.animation.Play("jump");
-	//Carl.animation.CrossFade("jump");
-	rigidbody.AddRelativeForce(transform.up * jumpForce,ForceMode.Impulse);
+	Carl.animation.CrossFade("jump");
+	rigidbody.velocity=Vector3(0.0, jumpForce * 1.6, 0.0);
+//	rigidbody.AddRelativeForce(transform.up * (jumpForce*2),ForceMode.Impulse);
 	//Carl.animation.CrossFadeQueued("run",0.3,QueueMode.CompleteOthers);
 	//Carl.animation["walk"].speed = 1.7;
 	//Carl.animation.Play("walk");	
+	Debug.Log("-- Big Jump");
 }
 
 function Run() {
@@ -226,15 +278,32 @@ function SlideUp() {
 	
 }
 function SlideDown() {
-	
-	Carl.animation.CrossFade("slidedown");
 	sliding=true;
+	Carl.animation.CrossFade("slidedown");
+	slideTime = maxSlideTime;	// Set sliding time
 	//Carl.animation.CrossFade("swat");
 	//Carl.animation.CrossFadeQueued("slideup",1.0,QueueMode.CompleteOthers);
 	//Carl.animation["walk"].speed = 1.7;
 	//Carl.animation.Play("walk");
 
 	
+}
+
+// Change path functions
+function MoveTopToBottom() {
+	// Ensure we aren't already moving and aren't already on the right path
+	if(!changingPath && topPath) {
+		Debug.Log("Move: TopToBottom");
+		changingPath=true;
+	}
+}
+
+function MoveBottomToTop() {
+	// Ensure we aren't already moving and aren't already on the right path
+	if(!changingPath && !topPath) {
+		Debug.Log("Move: BottomToTop");
+		changingPath=true;
+	}
 }
 
 function Swat() {
@@ -249,118 +318,55 @@ function Swat() {
 }
 function OnEnable()
 {
-    // subscribe to the global tap event
-  // FingerGestures.OnFingerDown += MyFingerGestures_OnFingerDown;
-   //     FingerGestures.OnFingerUp += FingerGestures_OnFingerUp; 
-   //     FingerGestures.OnFingerStationaryBegin += FingerGestures_OnFingerStationaryBegin;
-   //     FingerGestures.OnFingerStationary += FingerGestures_OnFingerStationary;
-   //     FingerGestures.OnFingerStationaryEnd += FingerGestures_OnFingerStationaryEnd;
-        
-    /* -- Disabled to use tap events instead (SE)    
-    FingerGestures.OnTap += MyFingerGestures_OnTap;
-     FingerGestures.OnDoubleTap += MyFingerGestures_OnDoubleTap;
-      FingerGestures.OnSwipe += MyFingerGestures_OnSwipe;
-     FingerGestures.OnFingerSwipe += MyFingerGestures_OnFingerSwipe;
-     */
-     // FingerGestures.OnSwipeDirection += MyFingerGestures_OnSwipe;
-
-    
+    FingerGestures.OnDragBegin += FingerGestures_OnDragBegin;
+    FingerGestures.OnDragMove += FingerGestures_OnDragMove;
+    FingerGestures.OnDragEnd += FingerGestures_OnDragEnd;
 }
  
 function OnDisable()
 {
-    // unsubscribe from the global tap event
-    /* -- Disabled to use tap events instead
-   FingerGestures.OnTap -= MyFingerGestures_OnTap;
- FingerGestures.OnDoubleTap -= MyFingerGestures_OnDoubleTap;
-        FingerGestures.OnSwipe -= MyFingerGestures_OnSwipe;
-         FingerGestures.OnFingerSwipe -= MyFingerGestures_OnFingerSwipe;
-        */ 
-        
-       // FingerGestures.OnFingerStationary -= MyFingerGestures_OnFingerStationary;
-    //  FingerGestures.OnFingerStationaryEnd -= MyFingerGestures_OnFingerStationaryEnd;
-        // FingerGestures.OnLongPress -= MyFingerGestures_OnLongPress;
+    FingerGestures.OnDragBegin -= FingerGestures_OnDragBegin;
+    FingerGestures.OnDragMove -= FingerGestures_OnDragMove;
+    FingerGestures.OnDragEnd -= FingerGestures_OnDragEnd;
 }
- 
-// Our tap event handler. The method name can be whatever you want.
 
-
-/*
-function MyFingerGestures_OnTap( fingerPos : Vector2 )
+// New drag event handlers
+function FingerGestures_OnDragBegin( fingerPos : Vector2, startPos : Vector2 )
 {
-   // Debug.Log( "TAP detected at " + fingerPos );
-for (var scp : Collider in colliderComponents) {
-
-Debug.Log("scp " + scp.name );
+	dragStart = startPos;
 }
 
-}
-
-
-function MyFingerGestures_OnDoubleTap( fingerPos : Vector2 )
+function FingerGestures_OnDragMove( fingerPos : Vector2, delta : Vector2 )
 {
-  // Debug.Log( " Double TAP  at " + fingerPos );
-  // Punch();
-  //BigJump();
-  
-    
-}
-
-function MyFingerGestures_OnSwipe( fingerPos : Vector2 )
-{
-  // Debug.Log( " Double TAP  at " + fingerPos );
-  // Punch();
- // SlideDown();
-    
-}
-
-function MyFingerGestures_OnFingerSwipe(fingerIndex : int,startPos : Vector2,  direction : FingerGestures.SwipeDirection,  velocity : float)
-{
-
-Debug.Log("direction " + direction.ToString());
-if (grounded) {
- if (direction.ToString() == "Down") {
- 	
- 	SlideDown();
- 	}
- 	else if (direction.ToString() == "Up") {
- 		if (sliding) {
- 			SlideUp();
- 			}
- 			else
- 			{
- 			
- 			Jump();
- 			}
- 	}
- }
-
-}
-*/
-
-/*
-
-function OnCollisionEnter (theCollision : Collision) {
-Debug.Log("scp");
-	for (var contact : ContactPoint in theCollision.contacts) {
-        print(contact.thisCollider.name + " hit " + contact.otherCollider.name + " " + contact.thisCollider.tag + " " + contact.otherCollider.tag);
-        if(contact.thisCollider.tag=="Environment" || contact.otherCollider.tag=="Environment") {
-			// Show or hide ouch text
-			ouchText.active=true;
-			KillPlayer();
+	Debug.Log(String.Format("OnDragMove: offset x={0}, y={1}", delta.x, delta.y));
+	// Check which direction we are moving in
+	// Moving up?
+	if(delta.y > (3 * Mathf.Abs(delta.x))) {	// moving up
+		if(sliding) {
+			SlideUp();
+			return;
+		}
+		if(grounded) {
+//			if(delta.y > bigjumpThreshhold) BigJump();
+			Jump();
+		}
+		return;
+	}
+	// Moving down?
+	if(delta.y < 0 && Mathf.Abs(delta.y) > (3 * Mathf.Abs(delta.x))) {
+		if(!sliding && grounded) SlideDown();
+	}
+	// Moving Right or left?
+	if(grounded && !sliding) {
+		if(delta.x > (3 * Mathf.Abs(delta.y))) {	// Moving right (top to bottom)
+			MoveTopToBottom();
+		} else if(delta.x < 0 && Mathf.Abs(delta.x) > (3 * Mathf.Abs(delta.y))) {	// Moving Left to right (bottom to top)
+			MoveBottomToTop();
 		}
 	}
-	Debug.Log("OnCollisionEnter: End");
 }
 
-function OnCollisionExit (theCollision : Collision) {
-	for (var contact : ContactPoint in theCollision.contacts) {
-        print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
-        if(contact.thisCollider.tag=="Environment" || contact.otherCollider.tag=="Environment") {
-			// Show or hide ouch text
-			ouchText.active=false;
-		}
- 	}
-	Debug.Log("OnCollisionExit: End");
-} 
-*/
+function FingerGestures_OnDragEnd( fingerPos : Vector2 )
+{
+
+}

@@ -7,6 +7,8 @@ public var butterflyPathObject : Transform;
 public var butterflyPrefab : Transform[];
 // Spawn frequency for objects
 public var framesBetweenSpawns : int = 200;
+// Delayed spawn timing at very start... used to offset spawns of multiple spawners
+public var delayedStartFrames : int = 100;
 // Bird Height Offset
 public var birdHeightOffset : float = 0.7f;
 // Array of jump over game objects
@@ -40,7 +42,7 @@ class Obstacle
 	
 function Start () {
 	// Initialise frame countdown for object spawns
-	frameCountdown = framesBetweenSpawns;
+	frameCountdown = framesBetweenSpawns+delayedStartFrames;
 	// Initialise butterfly spawn settings
 	butterflySpawnCountdown=framesBetweenButterflySpawns;
 	butterfliesLeft = Random.Range(butterflySeqMin, butterflySeqMax);

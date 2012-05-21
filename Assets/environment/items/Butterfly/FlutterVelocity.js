@@ -12,28 +12,97 @@ private var vectorToTarget : Vector3;
 
 private var correction : float;
 
+var paths : Transform[];
+private var currentPath : Transform;
+private var currentPathIndex : int = 0;
+
+private var currentiTweenPath : Vector3[];
+
+enum MoveMode {target,randomPath,setPath}
+
+var mode = MoveMode.setPath;
+
 
 function Start () {
 	myTransform = transform;
 	targetPosition =  Vector3(-5,Random.Range(8.4,9.0),0);
-	StartCoroutine("BuzzAround");
+	
+	if (mode == MoveMode.target) {
+	
+		StartCoroutine("BuzzAround");
+		
+	} else if (mode == MoveMode.setPath) {
+	
+		StartCoroutine("FollowSetPath",  paths);
+	
+	} else if (mode == MoveMode.randomPath) {
+	
+		StartCoroutine("FollowRandomPath",  paths[Random.Range(0,paths.length)]   );
+	
+	}
 }
 	
 function Update() {
 	
  	 	
- 	Debug.DrawRay(myTransform.position,vectorToTarget,Color.cyan,Time.deltaTime); 
- 	
+ 	if (mode == MoveMode.target) {
+	
+		Debug.DrawRay(myTransform.position,vectorToTarget,Color.cyan,Time.deltaTime);
+		currentVelocity = (Vector3.Lerp(currentVelocity,targetVelocity,0.02));
+		
+		Debug.DrawRay(myTransform.position,currentVelocity * 100,Color.white,Time.deltaTime); 
+		myTransform.Translate((currentVelocity.normalized * Mathf.Clamp(currentVelocity.magnitude,0,maxSpeed)),Space.World);
+		
+	} else if (mode == MoveMode.setPath) {
+		
+		//do nothing
+		
+	
+	} 	
+ 	 	
 
-	currentVelocity = (Vector3.Lerp(currentVelocity,targetVelocity,0.02));
-	Debug.DrawRay(myTransform.position,currentVelocity * 100,Color.white,Time.deltaTime); 
+}
+
+function FollowRandomPath(path : Transform){
+
+	Debug.Log(path.name);
+	currentPath = Instantiate(path, myTransform.position, myTransform.rotation);
+	
+	Debug.Log(currentPath.name);
+	
+	currentiTweenPath = iTweenPath.GetPath(path.name);
+	
+	for (i = 0; i < currentiTweenPath.Length; i++) {
+   		currentiTweenPath[i] += myTransform.position;
+	}
+	
+	iTween.MoveTo(gameObject, iTween.Hash("path" , currentiTweenPath, "speed", 1    , "oncomplete" , "FollowRandomPath" , "oncompleteparams" , paths[Random.Range(0,paths.length)] , "easetype" , "linear" ));
+	Destroy(currentPath.gameObject);
+
+}
+
+function FollowSetPath(){
+
+	currentPath = Instantiate(paths[currentPathIndex], myTransform.position, myTransform.rotation);
+	currentiTweenPath = iTweenPath.GetPath(paths[currentPathIndex].name);
+	for (i = 0; i < currentiTweenPath.Length; i++) {
+   		currentiTweenPath[i] += myTransform.position;
+	}
 	
 	
-	myTransform.Translate((currentVelocity.normalized * Mathf.Clamp(currentVelocity.magnitude,0,maxSpeed)),Space.World);
+	currentPathIndex++;
 	
+	if (currentPathIndex > (paths.Length -1)) {
+		currentPathIndex = 0;
+	}
+	
+	iTween.MoveTo(gameObject, iTween.Hash("path" , currentiTweenPath, "speed", 1    , "oncomplete" , "FollowSetPath" , "oncompleteparams" , paths[currentPathIndex] , "easetype" , "linear" ));
+	Destroy(currentPath.gameObject);
+
 	
 
 }
+
 
 function BuzzAround(){
 	while (1) {
@@ -50,14 +119,9 @@ function BuzzAround(){
 		Debug.DrawRay(myTransform.position,targetVelocity * 10,Color.blue,timeDelay);
 		
 		
-		//gameObject.GetComponents(iTweenEvent).Play();
 		
 		//iTween.RotateTo(gameObject,{"x":3,"time":4,"delay":1,"onupdate","myUpdateFunction","looptype","pingpong"});	
-		
-		
-		//iTweenEvent.GetEvent(gameObject, "rotateToVelocity").Play();
-		
-		
+
 		iTween.LookTo(gameObject,myTransform.position + targetVelocity,timeDelay);
 		
 		
